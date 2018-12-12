@@ -12,9 +12,7 @@ const NavBar = (props) => {
     </View>
   )
 }
-// EXAMPLE (View Tag): View style and Text stlye
 
-// EXAMPLE (Flexbox)
 const styles = {
   viewStyle: {
     backgroundColor: '#F8F8F8',

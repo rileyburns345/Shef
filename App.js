@@ -1,42 +1,37 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import { Text, View} from 'react-native';
 import NavBar from './src/components/NavBar/NavBar'
+import RecipeList from './src/components/RecipeList/RecipeList'
+
+const API = process.env.API || 'http://localhost:3000'
 
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      recipes: []
+    }
+  }
+
+  async componentWillMount() {
+    console.log('**********component mounted *********')
+    //get data from the API
+    const response = await fetch(`${API}/recipes`)
+    const json = await response.json()
+    this.setState({recipes: json})
+    console.log(json)
+  }
+
+
   render() {
+    console.log("here", this.state.recipes)
     return (
-      <View style={styles.container}>
+      <View >
         <NavBar />
+        <RecipeList recipes={this.state.recipes}/>
       </View>
+
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
