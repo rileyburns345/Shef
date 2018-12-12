@@ -1,9 +1,19 @@
-import React from 'react'
-import { View, Text, Image, Button } from 'react-native'
+import React, { Component } from 'react'
+import { View, Text, Image, Button, Alert } from 'react-native'
 import ImageGenerator from '../ImageGenerator/ImageGenerator'
 
-const Recipe = ({recipe}) => {
+class Recipe extends Component {
+  constructor(props) {
+  super(props)
+}
+
+_onPressButton() {
+    Alert.alert('You tapped the button!')
+  }
+
+render() {
 const { viewStyle, textStyle } = styles
+const { recipe } = this.props
   return (
     <View>
     <View>
@@ -14,6 +24,7 @@ const { viewStyle, textStyle } = styles
     <View style={viewStyle}>
       <ImageGenerator recipe={recipe}/>
       <Button
+        onPress={this._onPressButton}
         title="read more"
         color="green"
         accessibilityLabel="Learn more about this green button"
@@ -21,6 +32,8 @@ const { viewStyle, textStyle } = styles
     </View>
     </View>
   )
+
+  }
 }
 
 const styles = {
