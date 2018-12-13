@@ -37,6 +37,12 @@ export default class App extends Component {
       })
   }
 
+  backClick = () => {
+    this.setState({
+      ...this.state,
+      singleView: false
+      })
+  }
 
   render() {
     console.log("here", this.state)
