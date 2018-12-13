@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Text, View} from 'react-native';
+import { Container, Header, Content } from 'native-base'
 import NavBar from './src/components/NavBar/NavBar'
 import RecipeList from './src/components/RecipeList/RecipeList'
 import SingleCardView from './src/components/SingleCardView/SingleCardView'
@@ -46,11 +47,13 @@ export default class App extends Component {
   render() {
     console.log("here", this.state)
     return (
-      <View >
+      <Container >
         <NavBar />
-        {this.state.singleView ? <SingleCardView card={this.state.singleView} backClick={this.backClick}/> : null}
-        {this.state.singleView ? null : <RecipeList recipes={this.state.recipes} cardClick={this.cardClick}/>}
-      </View>
+        <Content>
+          {this.state.singleView ? <SingleCardView card={this.state.singleView}/> : null}
+          {this.state.singleView ? null : <RecipeList recipes={this.state.recipes} cardClick={this.cardClick}/>}
+        </Content>
+      </Container>
 
     );
   }
