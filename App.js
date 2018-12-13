@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Text, View} from 'react-native';
+import { Container, Content } from 'native-base'
 import NavBar from './src/components/NavBar/NavBar'
 import RecipeList from './src/components/RecipeList/RecipeList'
 
@@ -10,7 +11,8 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      recipes: []
+      recipes: [],
+      singleView: false
     }
   }
 
@@ -23,15 +25,17 @@ export default class App extends Component {
     console.log(json)
   }
 
+  cardSelect(obj){
+
+  }
 
   render() {
     console.log("here", this.state.recipes)
     return (
-      <View >
+      <Container>
         <NavBar />
-        <RecipeList recipes={this.state.recipes}/>
-      </View>
-
+          {this.state.singleView ? null : <RecipeList recipes={this.state.recipes} />}
+      </Container>
     );
   }
 }
