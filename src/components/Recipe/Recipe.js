@@ -1,54 +1,50 @@
 import React, { Component } from 'react'
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 
 import ImageGenerator from '../ImageGenerator/ImageGenerator'
 
 class Recipe extends Component {
 
     render() {
-      const { viewStyle, textStyle } = styles
       const { recipe, cardClick } = this.props
       return (
-    <Container style={viewStyle}>
-      <Header>
-        <Left>
-          <Button onPress={() => cardClick(recipe)} transparent>
-            <ImageGenerator recipe={recipe}/>
-          </Button>
-        </Left>
-       <Body>
-         <Title>Header</Title>
-       </Body>
-        <Right />
-      </Header>
-       <Content>
-        <Text style={textStyle}>
-          {recipe.recipe_name}
-        </Text>
-       </Content>
-       <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>Footer</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
-     </Container>
-  )
-
+      <Container>
+        <Header />
+        <Content>
+          <Card>
+            <CardItem>
+              <Left>
+                <Body>
+                  <Text>{recipe.recipe_name}</Text>
+                </Body>
+              </Left>
+            </CardItem>
+            <CardItem cardBody>
+              <ImageGenerator recipe={recipe}/>
+            </CardItem>
+            <CardItem>
+              <Left>
+                <Button transparent>
+                  <Text>Like</Text>
+                </Button>
+              </Left>
+              <Body>
+                <Button transparent>
+                  <Text>Comment</Text>
+                </Button>
+              </Body>
+              <Right>
+              <Button onPress={() => cardClick(recipe)} transparent>
+                <Text>Read More</Text>
+              </Button>
+              </Right>
+            </CardItem>
+          </Card>
+        </Content>
+      </Container>
+    )
   }
 }
 
-const styles = {
-  viewStyle: {
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    elevation: 2,
-    position: 'relative'
-  },
-  textStyle: {
-    fontSize: 20
-  }
-}
 
 export default Recipe

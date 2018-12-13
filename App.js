@@ -36,13 +36,19 @@ export default class App extends Component {
       })
   }
 
+  backClick = () => {
+    this.setState({
+      ...this.state,
+      singleView: false
+      })
+  }
 
   render() {
     console.log("here", this.state)
     return (
       <View >
         <NavBar />
-        {this.state.singleView ? <SingleCardView card={this.state.singleView}/> : null}
+        {this.state.singleView ? <SingleCardView card={this.state.singleView} backClick={this.backClick}/> : null}
         {this.state.singleView ? null : <RecipeList recipes={this.state.recipes} cardClick={this.cardClick}/>}
       </View>
 
