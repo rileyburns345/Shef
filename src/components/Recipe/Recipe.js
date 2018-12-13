@@ -1,36 +1,39 @@
 import React, { Component } from 'react'
-import { View, Text, Image, Button, Alert } from 'react-native'
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
+
 import ImageGenerator from '../ImageGenerator/ImageGenerator'
 
 class Recipe extends Component {
-  constructor(props) {
-  super(props)
-}
 
-_onPressButton() {
-    Alert.alert('You tapped the button!')
-  }
-
-render() {
-const { viewStyle, textStyle } = styles
-const { recipe } = this.props
-  return (
-    <View>
-    <View>
-      <Text style={textStyle}>
-      {recipe.recipe_name}
-      </Text>
-    </View>
-    <View style={viewStyle}>
-      <ImageGenerator recipe={recipe}/>
-      <Button
-        onPress={this._onPressButton}
-        title="read more"
-        color="green"
-        accessibilityLabel="Learn more about this green button"
-        />
-    </View>
-    </View>
+    render() {
+      const { viewStyle, textStyle } = styles
+      const { recipe, cardClick } = this.props
+      return (
+    <Container style={viewStyle}>
+      <Header>
+        <Left>
+          <Button onPress={() => cardClick(recipe)} transparent>
+            <ImageGenerator recipe={recipe}/>
+          </Button>
+        </Left>
+       <Body>
+         <Title>Header</Title>
+       </Body>
+        <Right />
+      </Header>
+       <Content>
+        <Text style={textStyle}>
+          {recipe.recipe_name}
+        </Text>
+       </Content>
+       <Footer>
+          <FooterTab>
+            <Button full>
+              <Text>Footer</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
+     </Container>
   )
 
   }
