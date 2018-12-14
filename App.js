@@ -15,7 +15,8 @@ export default class App extends Component {
     this.state = {
       recipes: [],
       filteredRecipes: [],
-      singleView: false
+      singleView: false,
+      searchVal: 'Popular Recipes'
     }
   }
 
@@ -62,25 +63,28 @@ export default class App extends Component {
   filtering(searchString){
     if(searchString !== ""){
       console.log(searchString)
-      const filteredRecipes = this.state.Recipes.filter((recipe)=>(recipe.description.includes(searchString) || recipe.diet.includes(searchString) ||  recipe.instructions.includes(searchString) ||  recipe.recipe_name.includes(searchString) || recipe.ingredients.includes(searchString) || recipe.course.includes(searchString)))
+      const filteredRecipes = this.state.recipes.filter((recipe)=>(recipe.description.includes(searchString) || recipe.diet.includes(searchString) ||  recipe.instructions.includes(searchString) ||  recipe.recipe_name.includes(searchString) || recipe.ingredients.includes(searchString) || recipe.course.includes(searchString)))
       if(filteredRecipes.length > 0){
         this.setState({
           ...this.state,
-          filteredRecipes: filteredRecipes
+          filteredRecipes: filteredRecipes,
+          searchVal: searchString
         })
       }else{
         this.setState({
           ...this.state,
-          filteredRecipes: this.state.Recipes
+          filteredRecipes: this.state.recipes,
+          searchVal: 'Popular Recipes'
         })
-        window.Materialize.toast('No Results', 1000)
+        // add toast or notification of 'no results'
       }
     }else{
       this.setState({
         ...this.state,
-        filteredRecipes: this.state.Recipes
+        filteredRecipes: this.state.Recipes,
+        searchVal: 'Popular Recipes'
       })
-      window.Materialize.toast('No Results', 1000)
+      // add toast or notification of 'no results'
     }
   }
 
@@ -90,11 +94,11 @@ export default class App extends Component {
       <Container >
         <NavBar openDrawer={this.openDrawer}/>
         <Drawer ref={(ref) => { this.drawer = ref; }}
-        content={<SideBar navigator={this.navigator} />}
+        content={<SideBar filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer}/>}
         onClose={() => this.closeDrawer()}>
         <Content>
           {this.state.singleView ? <SingleCardView backClick={this.backClick} card={this.state.singleView}/> : null}
-          {this.state.singleView ? null : <RecipeList recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
+          {this.state.singleView ? null : <RecipeList searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
         </Content>
         </Drawer>
       </Container>

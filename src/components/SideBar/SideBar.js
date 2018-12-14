@@ -2,6 +2,36 @@ import React from "react";
 import { AppRegistry, Image, StatusBar } from "react-native";
 import { Container, Content, Text, List, ListItem, Item, Icon, Input, Button } from "native-base";
 export default class SideBar extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      filter: ''
+    }
+  }
+
+  onInputChange = (e) => {
+    e.preventDefault()
+    this.setState({
+      ...this.state,
+      [e.target.name]: e.target.value
+    })
+    if(e.target.value === ''){
+      this.props.filtering(this.state.filter)
+    }
+  }
+
+  // add in 'return' check on input
+  handleKeyPress = (e) => {
+    if(e.key === 'Enter'){
+      this.props.filtering(this.state.filter)
+    }
+  }
+
+  handleSubmit(){
+    this.props.filtering(this.state.filter)
+    this.props.closeSideBar()
+  }
+
   render() {
     return (
       <Container>
@@ -10,10 +40,11 @@ export default class SideBar extends React.Component {
             <ListItem searchBar rounded>
               <Item>
                 <Icon name="ios-search" />
-                <Input placeholder="Search" />
+                <Input id='filter' name='filter'
+                onChange={this.onInputChange} placeholder="Search" />
                 <Icon name="ios-people" />
               </Item>
-              <Button transparent>
+              <Button onPress={()=>this.handleSubmit()} transparent>
                 <Text>Search</Text>
               </Button>
             </ListItem>

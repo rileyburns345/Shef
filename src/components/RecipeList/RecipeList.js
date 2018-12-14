@@ -21,7 +21,7 @@ const { viewStyle, textStyle } = styles
   return (
   <View>
     <View>
-      <Text style={textStyle}> Popular Recipes </Text>
+      <Text style={textStyle}> {this.props.searchVal} </Text>
     </View>
     <ScrollView style={viewStyle}>
       {this.renderRecipes()}
