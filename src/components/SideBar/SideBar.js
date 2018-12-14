@@ -5,6 +5,8 @@ export default class SideBar extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      diets: ['Dairy-free', 'Egg-free', 'Gluten-free', 'Nut-free', 'Soy-free', 'Sugar-free', 'Vegetarian'],
+      courses: ['Breakfast', 'Brunch', 'Lunch', 'Dinner', 'Dessert'],
       filter: ''
     }
   }
@@ -28,6 +30,11 @@ export default class SideBar extends React.Component {
     this.props.closeSideBar()
   }
 
+  handleCategory(category){
+    this.props.filtering(category)
+    this.props.closeSideBar()
+  }
+
   render() {
     return (
       <Container>
@@ -46,30 +53,19 @@ export default class SideBar extends React.Component {
             <ListItem itemDivider>
               <Text>Browse by Diet:</Text>
             </ListItem>
-            <ListItem>
-              <Text>Vegan</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Sugar-free</Text>
-            </ListItem>
+            {this.state.diets.map((diet)=>(
+              <ListItem onPress={()=>this.handleCategory(diet.toLowerCase())}>
+                <Text>{diet}</Text>
+              </ListItem>
+            ))}
             <ListItem itemDivider>
               <Text>Browse by Course:</Text>
             </ListItem>
-            <ListItem>
-              <Text>Breakfast</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Brunch</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Lunch</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Dinner</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Midnight Snack</Text>
-            </ListItem>
+            {this.state.courses.map((course)=>(
+              <ListItem onPress={()=>this.handleCategory(course.toLowerCase())}>
+                <Text>{course}</Text>
+              </ListItem>
+            ))}
           </List>
         </Content>
       </Container>
