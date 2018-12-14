@@ -62,7 +62,6 @@ export default class App extends Component {
 
   filtering(searchString){
     if(searchString !== ""){
-      console.log(searchString)
       const filteredRecipes = this.state.recipes.filter((recipe)=>(recipe.description.includes(searchString) || recipe.diet.includes(searchString) ||  recipe.instructions.includes(searchString) ||  recipe.recipe_name.includes(searchString) || recipe.ingredients.includes(searchString) || recipe.course.includes(searchString)))
       if(filteredRecipes.length > 0){
         this.setState({
