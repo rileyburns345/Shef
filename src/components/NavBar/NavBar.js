@@ -6,6 +6,7 @@ import { Header, Left, Body, Right, Button, Icon, Title } from 'native-base'
 // create a component
 class NavBar extends Component {
   render(){
+
     const styles = {
       viewStyle: {
         backgroundColor: '#F8F8F8',
@@ -24,11 +25,10 @@ class NavBar extends Component {
       }
     }
     const {textStyle, viewStyle} = styles
-
     return (
       <Header>
         <Left>
-          <Button transparent>
+          <Button onPress={()=>this.props.openDrawer()} transparent>
             <Icon name='menu' />
           </Button>
         </Left>

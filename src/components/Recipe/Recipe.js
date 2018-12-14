@@ -8,40 +8,35 @@ class Recipe extends Component {
     render() {
       const { recipe, cardClick } = this.props
       return (
-      <Container>
-        <Header />
-        <Content>
-          <Card>
-            <CardItem>
-              <Left>
-                <Body>
-                  <Text>{recipe.recipe_name}</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem cardBody>
-              <ImageGenerator recipe={recipe}/>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent>
-                  <Text>Like</Text>
-                </Button>
-              </Left>
+        <Card>
+          <CardItem>
+            <Left>
               <Body>
-                <Button transparent>
-                  <Text>Comment</Text>
-                </Button>
+                <Text>{recipe.recipe_name}</Text>
               </Body>
-              <Right>
-              <Button onPress={() => cardClick(recipe)} transparent>
-                <Text>Read More</Text>
+            </Left>
+          </CardItem>
+          <CardItem cardBody>
+            <ImageGenerator recipe={recipe}/>
+          </CardItem>
+          <CardItem>
+            <Left>
+              <Button transparent>
+                <Text>Like</Text>
               </Button>
-              </Right>
-            </CardItem>
-          </Card>
-        </Content>
-      </Container>
+            </Left>
+            <Body>
+              <Button transparent>
+                <Text>Comment</Text>
+              </Button>
+            </Body>
+            <Right>
+            <Button onPress={() => cardClick(recipe)} transparent>
+              <Text>Read More</Text>
+            </Button>
+            </Right>
+          </CardItem>
+        </Card>
     )
   }
 }
