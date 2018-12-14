@@ -25,12 +25,18 @@ export default class App extends Component {
     //get data from the API
     const response = await fetch(`${API}/recipes`)
     const json = await response.json()
+    const parsedJson = await json.map((element)=>{
+      return {
+        ...element,
+        ingredients: JSON.parse(element.ingredients)
+      }
+    })
 
 
     this.setState({
       ...this.state,
-      recipes: json,
-      filteredRecipes: json
+      recipes: parsedJson,
+      filteredRecipes: parsedJson
     })
     console.log(json)
   }
