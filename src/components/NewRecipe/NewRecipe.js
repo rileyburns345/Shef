@@ -88,8 +88,8 @@ class NewRecipe extends Component {
 
   submit(){
     const { recipe_name, description, ingredients, course, diet, image_url, instructions } = this.state
-    const newRecipe = { recipe_name, description, ingredients, course, diet, image_url, instructions }
-    console.log(newRecipe)
+    const newRecipe = { recipe_name, description, ingredients: JSON.stringify(ingredients), course, diet, image_url, instructions }
+    this.props.newRecipe(newRecipe)
   }
 
   render() {
