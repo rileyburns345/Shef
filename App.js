@@ -68,7 +68,7 @@ export default class App extends Component {
         this.setState({
           ...this.state,
           filteredRecipes: filteredRecipes,
-          searchVal: searchString
+          searchVal: `Search: ${searchString}`
         })
       }else{
         this.setState({
@@ -81,7 +81,7 @@ export default class App extends Component {
     }else{
       this.setState({
         ...this.state,
-        filteredRecipes: this.state.Recipes,
+        filteredRecipes: this.state.recipes,
         searchVal: 'Popular Recipes'
       })
       // add toast or notification of 'no results'

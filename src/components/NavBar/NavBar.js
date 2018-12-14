@@ -37,7 +37,7 @@ class NavBar extends Component {
         </Body>
         <Right>
           <Button transparent>
-            <Icon name='profile' />
+            <Icon name='ios-people' />
           </Button>
         </Right>
       </Header>

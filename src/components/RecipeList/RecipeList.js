@@ -21,10 +21,12 @@ const { viewStyle, textStyle } = styles
   return (
   <View>
     <View>
-      <Text style={textStyle}> {this.props.searchVal} </Text>
+      <Text> {this.props.searchVal} </Text>
     </View>
     <ScrollView style={viewStyle}>
-      {this.renderRecipes()}
+      {this.props.recipes.map((recipe, id) => (
+        <Recipe recipe={recipe} key={id} cardClick={this.props.cardClick}/>
+      ))}
     </ScrollView>
   </View>
     )
@@ -33,7 +35,7 @@ const { viewStyle, textStyle } = styles
 
 const styles = {
   textStyle: {
-    fontSize: 40,
+    fontSize: 25,
     alignItems: 'center'
   }
 }

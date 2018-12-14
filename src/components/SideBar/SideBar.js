@@ -10,14 +10,10 @@ export default class SideBar extends React.Component {
   }
 
   onInputChange = (e) => {
-    e.preventDefault()
     this.setState({
       ...this.state,
-      [e.target.name]: e.target.value
+      filter: e
     })
-    if(e.target.value === ''){
-      this.props.filtering(this.state.filter)
-    }
   }
 
   // add in 'return' check on input
@@ -41,8 +37,7 @@ export default class SideBar extends React.Component {
               <Item>
                 <Icon name="ios-search" />
                 <Input id='filter' name='filter'
-                onChange={this.onInputChange} placeholder="Search" />
-                <Icon name="ios-people" />
+                onChangeText={this.onInputChange} placeholder="Search" />
               </Item>
               <Button onPress={()=>this.handleSubmit()} transparent>
                 <Text>Search</Text>
