@@ -5,6 +5,7 @@ import SideBar from './src/components/SideBar/SideBar'
 import NavBar from './src/components/NavBar/NavBar'
 import RecipeList from './src/components/RecipeList/RecipeList'
 import SingleCardView from './src/components/SingleCardView/SingleCardView'
+import NewRecipe from './src/components/NewRecipe/NewRecipe'
 
 const API = process.env.API || 'http://localhost:3000'
 
@@ -16,7 +17,8 @@ export default class App extends Component {
       recipes: [],
       filteredRecipes: [],
       singleView: false,
-      searchVal: 'Popular Recipes'
+      searchVal: 'Popular Recipes',
+      newView: false
     }
   }
 
@@ -106,8 +108,9 @@ export default class App extends Component {
           content={<SideBar filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer}/>}
           onClose={() => this.closeDrawer()}>
           <Content>
+            {this.state.newView ? <NewRecipe /> : null}
             {this.state.singleView ? <SingleCardView backClick={this.backClick} card={this.state.singleView}/> : null}
-            {this.state.singleView ? null : <RecipeList searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
+            {this.state.singleView || this.state.newView ? null : <RecipeList searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </Content>
           </Drawer>
         </Container>
