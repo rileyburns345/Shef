@@ -22,25 +22,49 @@ export default class App extends Component {
     }
   }
 
-  async componentDidMount() {
-    console.log('**********component mounted *********')
-    //get data from the API
-    const response = await fetch(`${API}/recipes`)
-    const json = await response.json()
-    const parsedJson = await json.map((element)=>{
-      return {
-        ...element,
-        ingredients: JSON.parse(element.ingredients)
+  loginClick = async (loginInfo) => {
+
+    console.log('before get call', this.state);
+    const response = await fetch(`${API}/sign-in`, {
+       method: 'POST',
+       headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify(loginInfo)
+      })
+      // console.log('json: ', response);
+      if(response.status === 200) {
+      const json = await response.json()
+      this.setState({
+        ...this.state,
+        token: JSON.parse(response._bodyInit).token
+      })
+      // console.log(this.state.token);
       }
-    })
+    }
+
+  async componentDidMount() {
+    //get data from the API
+    console.log('*&%*$&$&(*(&%764746');
+    // try {
+    const response = await fetch(`${API}/recipes`)
+    console.log('response', response);
+    const json = await response.json()
+    console.log('JSON', json);
+
+    console.log('parsedJson', parsedJson);
+    // }
+    //   catch(err) {
+    //     console.log('========', err);
+    //   }
 
 
     this.setState({
       ...this.state,
-      recipes: parsedJson,
-      filteredRecipes: parsedJson
+      recipes: json,
+      filteredRecipes: json
     })
-    console.log(json)
+    console.log('AFTER GET CALL', this.state);
   }
 
   cardClick = (clickedRecipe) => {
@@ -69,6 +93,7 @@ export default class App extends Component {
   };
 
   filtering(searchString){
+    console.log('IN FILTER', this.state);
     if(searchString !== ""){
       const filteredRecipes = this.state.recipes.filter((recipe)=>(recipe.description.includes(searchString) || recipe.diet.includes(searchString) ||  recipe.instructions.includes(searchString) ||  recipe.recipe_name.includes(searchString) || recipe.ingredients.includes(searchString) || recipe.course.includes(searchString)))
       if(filteredRecipes.length > 0){
@@ -100,26 +125,9 @@ export default class App extends Component {
         text: 'No Results',
         buttonText: 'Okay'
       })
-loginClick = async (loginInfo) => {
-  // console.log('LOGIN CLICK', username, password);
-
-  const response = await fetch(`${API}/sign-in`, {
-     method: 'POST',
-     headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      },
-      body: JSON.stringify(loginInfo)
-    })
-    console.log('json: ', response);
-    if(response.status === 200) {
-    const json = await response.json()
-    this.setState({
-      ...this.state,
-      token: JSON.parse(response._bodyInit).token
-    })
-    console.log(this.state.token);
     }
   }
+
 
   render() {
     console.log("here", this.state)
@@ -141,4 +149,5 @@ loginClick = async (loginInfo) => {
       </Root>
     );
   }
+
 }
