@@ -1,6 +1,6 @@
 import React from "react";
 import { AppRegistry, Image, StatusBar } from "react-native";
-import { Container, Content, Text, List, ListItem, Item, Icon, Input, Button } from "native-base";
+import { Container, Content, Text, List, ListItem, Item, Icon, Input, Button, Footer } from "native-base";
 export default class SideBar extends React.Component {
   constructor(props){
     super(props)
@@ -68,6 +68,17 @@ export default class SideBar extends React.Component {
             ))}
           </List>
         </Content>
+        {this.props.token
+          ? <Footer>
+              <Button transparent>
+                <Text>
+                  Logout
+                </Text>
+              </Button>
+            </Footer>
+          : null
+        }
+
       </Container>
     );
   }

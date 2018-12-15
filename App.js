@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Text, View} from 'react-native';
-import { Container, Header, Content, Drawer, Root, Toast } from 'native-base'
+import { View } from 'react-native';
+import { Container, Header, Content, Drawer, Root, Toast, Footer, Button, Text } from 'native-base'
 import SideBar from './src/components/SideBar/SideBar'
 import NavBar from './src/components/NavBar/NavBar'
 import RecipeList from './src/components/RecipeList/RecipeList'
@@ -20,7 +20,8 @@ export default class App extends Component {
       singleView: false,
       searchVal: 'Popular Recipes',
       newView: false,
-      token: ''
+      token: false,
+      loginSignup: false
     }
   }
 
@@ -39,7 +40,8 @@ export default class App extends Component {
       const json = await response.json()
       this.setState({
         ...this.state,
-        token: JSON.parse(response._bodyInit).token
+        token: JSON.parse(response._bodyInit).token,
+        loginSignup: false
       })
       // console.log(this.state.token);
       }
@@ -128,6 +130,26 @@ export default class App extends Component {
     console.log(recipe);
   }
 
+  newRecipeOpen(){
+    this.setState({
+      ...this.state,
+      newView: true
+    })
+  }
+
+  loginSignup(){
+    this.setState({
+      ...this.state,
+      loginSignup: true
+    })
+  }
+
+  dismissNewView(){
+    this.setState({
+      ...this.state,
+      newView: false
+    })
+  }
 
   render() {
     console.log("here", this.state)
@@ -135,16 +157,26 @@ export default class App extends Component {
     return (
       <Root>
         <Container >
-          <NavBar openDrawer={this.openDrawer}/>
+          <NavBar loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
           <Drawer ref={(ref) => { this.drawer = ref; }}
-          content={<SideBar filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer}/>}
+          content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer}/>}
           onClose={() => this.closeDrawer()}>
           <Content>
-            {this.state.newView ? <NewRecipe newRecipe={this.newRecipe.bind(this)} /> : null}
-            {this.state.token ? null : <LoginSignup loginClick={this.loginClick}/>}
+            {this.state.newView ? <NewRecipe dismiss={this.dismissNewView.bind(this)} newRecipe={this.newRecipe.bind(this)} /> : null}
+            {this.state.loginSignup ? <LoginSignup loginClick={this.loginClick}/> : null}
             {this.state.singleView ? <SingleCardView backClick={this.backClick} card={this.state.singleView}/> : null}
-            {this.state.singleView || this.state.newView ? null : <RecipeList searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
+            {this.state.singleView || this.state.newView || this.state.loginSignup ? null : <RecipeList searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </Content>
+          {this.state.token && !this.state.newView
+            ? <Footer>
+                <Button onPress={()=>this.newRecipeOpen()} transparent>
+                  <Text>
+                    Add New Recipe
+                  </Text>
+                </Button>
+              </Footer>
+            : null
+          }
           </Drawer>
         </Container>
       </Root>
