@@ -141,6 +141,11 @@ export default class App extends Component {
     }
   }
 
+  newRecipe(recipe){
+    // TIES INTO STATE WHEN LOGGED IN
+    console.log(recipe);
+  }
+
 
   render() {
     let logger = []
@@ -152,7 +157,7 @@ export default class App extends Component {
           content={<SideBar filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer}/>}
           onClose={() => this.closeDrawer()}>
           <Content>
-            {this.state.newView ? <NewRecipe /> : null}
+            {this.state.newView ? <NewRecipe newRecipe={this.newRecipe.bind(this)} /> : null}
             {this.state.token ? null : <LoginSignup loginClick={this.loginClick} signUpClick={this.signUpClick}/>}
             {this.state.singleView ? <SingleCardView backClick={this.backClick} card={this.state.singleView}/> : null}
             {this.state.singleView || this.state.newView ? null : <RecipeList searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
