@@ -41,25 +41,44 @@ export default class App extends Component {
         ...this.state,
         token: JSON.parse(response._bodyInit).token
       })
-      // console.log(this.state.token);
+      // console. (this.state.token);
       }
     }
 
+    signUpClick = async (signUpInfo) => {
+
+      console.log('BEFORE SIGNUP', this.state);
+      const response = await fetch(`${API}/sign-up`, {
+         method: 'POST',
+         headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          body: JSON.stringify(signUpInfo)
+        })
+        // console.log('json: ', response);
+        if(response.status === 200) {
+        const json = await response.json()
+        console.log('JJJJJSSSOOOOONNN', json);
+        console.log('RESPONSE', response);
+        this.setState({
+          ...this.state,
+          token: JSON.parse(response._bodyInit).token
+        })
+        console.log('TOKEN', this.state.token);
+        }
+      }
+
   async componentDidMount() {
     //get data from the API
-    console.log('*&%*$&$&(*(&%764746');
     // try {
     const response = await fetch(`${API}/recipes`)
-    console.log('response', response);
     const json = await response.json()
-
-    console.log('JSON', json);
     this.setState({
       ...this.state,
       recipes: json,
       filteredRecipes: json
     })
-    console.log('AFTER GET CALL', this.state);
+
   }
 
   cardClick = (clickedRecipe) => {
@@ -88,7 +107,6 @@ export default class App extends Component {
   };
 
   filtering(searchString){
-    console.log('IN FILTER', this.state);
     if(searchString !== ""){
       const filteredRecipes = this.state.recipes.filter((recipe)=>(recipe.description.includes(searchString) || recipe.diet.includes(searchString) ||  recipe.instructions.includes(searchString) ||  recipe.recipe_name.includes(searchString) || recipe.ingredients.includes(searchString) || recipe.course.includes(searchString)))
       if(filteredRecipes.length > 0){
@@ -130,7 +148,6 @@ export default class App extends Component {
 
 
   render() {
-    console.log("here", this.state)
     let logger = []
     return (
       <Root>
@@ -141,7 +158,7 @@ export default class App extends Component {
           onClose={() => this.closeDrawer()}>
           <Content>
             {this.state.newView ? <NewRecipe newRecipe={this.newRecipe.bind(this)} /> : null}
-            {this.state.token ? null : <LoginSignup loginClick={this.loginClick}/>}
+            {this.state.token ? null : <LoginSignup loginClick={this.loginClick} signUpClick={this.signUpClick}/>}
             {this.state.singleView ? <SingleCardView backClick={this.backClick} card={this.state.singleView}/> : null}
             {this.state.singleView || this.state.newView ? null : <RecipeList searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </Content>
