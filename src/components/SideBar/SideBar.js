@@ -78,7 +78,6 @@ export default class SideBar extends React.Component {
             </Footer>
           : null
         }
-
       </Container>
     );
   }
