@@ -65,7 +65,7 @@ checkCheckBox = () => {
             </Item>
             <Item floatingLabel>
               <Label>Password</Label>
-              <Input autoCapitalize="none" id='password' onChangeText={this.onPasswordChange} placeholder=''/>
+              <Input autoCapitalize="none" secureTextEntry={true} id='password' onChangeText={this.onPasswordChange} placeholder=''/>
             </Item>
             {this.state.checked
               ? <Item floatingLabel>
