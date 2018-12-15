@@ -61,16 +61,16 @@ checkCheckBox = () => {
           <Form>
             <Item floatingLabel>
               <Label>Email</Label>
-              <Input id='email' onChangeText={this.onemailChange} placeholder=''/>
+              <Input id='email' autoCapitalize="none" onChangeText={this.onemailChange} placeholder=''/>
             </Item>
             <Item floatingLabel>
               <Label>Password</Label>
-              <Input id='password' onChangeText={this.onPasswordChange} placeholder=''/>
+              <Input autoCapitalize="none" id='password' onChangeText={this.onPasswordChange} placeholder=''/>
             </Item>
             {this.state.checked
               ? <Item floatingLabel>
                 <Label>Username</Label>
-                <Input id='username' onChangeText={this.onUsernameChange} placeholder=''/>
+                <Input autoCapitalize="none" id='username' onChangeText={this.onUsernameChange} placeholder=''/>
               </Item>
               : null
             }
