@@ -64,7 +64,8 @@ export default class App extends Component {
         console.log('RESPONSE', response);
         this.setState({
           ...this.state,
-          token: JSON.parse(response._bodyInit).token
+          token: JSON.parse(response._bodyInit).token,
+          loginSignup: false
         })
         console.log('TOKEN', this.state.token);
         }
