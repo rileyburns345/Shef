@@ -68,13 +68,16 @@ export default class SideBar extends React.Component {
             ))}
           </List>
         </Content>
-        <Footer>
-          <Button>
-            <Text>
-              Logout
-            </Text>
-          </Button>
-        </Footer>
+        {this.props.token
+          ? <Footer>
+              <Button transparent>
+                <Text>
+                  Logout
+                </Text>
+              </Button>
+            </Footer>
+          : null
+        }
       </Container>
     );
   }

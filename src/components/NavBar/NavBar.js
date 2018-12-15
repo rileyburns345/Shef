@@ -36,9 +36,15 @@ class NavBar extends Component {
           <Title style={textStyle}> Shef </Title>
         </Body>
         <Right>
-          <Button transparent>
-            <Icon name='ios-people' />
-          </Button>
+          {this.props.token
+            ? <Button transparent>
+                <Icon name='star' />
+              </Button>
+            : <Button onPress={()=>this.props.loginSignup()} transparent>
+                <Icon name='ios-people' />
+              </Button>
+          }
+
         </Right>
       </Header>
     )

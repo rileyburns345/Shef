@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Form, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right } from 'native-base';
 
 class NewRecipe extends Component {
   constructor(props){
@@ -92,6 +92,22 @@ class NewRecipe extends Component {
     this.props.newRecipe(newRecipe)
   }
 
+  dismiss(){
+    this.setState({
+      ...this.state,
+      course: '',
+      description: '',
+      diet: '',
+      dietInputStr: '',
+      image_url: '',
+      ingredients: [],
+      ingredientsStr: '',
+      instructions: '',
+      recipe_name: ''
+    })
+    this.props.dismiss()
+  }
+
   render() {
     return (
       <Form>
@@ -158,6 +174,9 @@ class NewRecipe extends Component {
         </Item>
         <Item>
           <Button onPress={()=>this.submit()} transparent><Text>Submit</Text></Button>
+        </Item>
+        <Item>
+          <Button onPress={()=>this.dismiss()} transparent><Text>Dismiss</Text></Button>
         </Item>
       </Form>
     )
