@@ -71,11 +71,10 @@ class NewRecipe extends Component {
     });
   }
   onDietChange(value: string) {
-    const newState = [...this.state.diet, value]
-    const uniqueNewState = newState.filter((v, i, a) => a.indexOf(v) === i)
+    const newState = [...this.state.diet, value].filter((v, i, a) => a.indexOf(v) === i)
     this.setState({
       ...this.state,
-      diet: uniqueNewState
+      diet: newState
     });
   }
   removeIngredient(value){
