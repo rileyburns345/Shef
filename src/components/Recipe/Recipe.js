@@ -23,11 +23,13 @@ class Recipe extends Component {
             <Left>
               <Button transparent>
                 <Text>Like</Text>
+                <Icon name='thumbs-up'/>
               </Button>
             </Left>
             <Body>
               <Button transparent>
                 <Text>Comment</Text>
+                <Icon name='chatbubbles'/>
               </Button>
             </Body>
             <Right>
