@@ -145,7 +145,9 @@ export default class App extends Component {
 
   newRecipe(recipe){
     // TIES INTO STATE WHEN LOGGED IN
+    recipe.user_id = this.state.token
     console.log(recipe);
+    this.postAPI(recipe)
   }
 
   newRecipeOpen(){
@@ -177,6 +179,31 @@ export default class App extends Component {
       newView: false
     })
   }
+
+  async getAllAPI() {
+    const response = await fetch(`${API}/recipes`)
+    const json = await response.json()
+    this.setState({
+      ...this.state,
+      recipes: json,
+      filteredRecipes: json
+    })
+  }
+
+  async postAPI(recipe){
+   const response = await fetch (`${API}/recipes/`, {
+       method: 'POST',
+       mode: "cors", // no-cors, cors, *same-origin
+       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+       credentials: "same-origin", // include, *same-origin, omit
+       headers: {
+         'Accept': 'application/JSON',
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify(recipe)
+     })
+     setTimeout(()=>this.getAllAPI(), 100)
+ }
 
   render() {
     let logger = []
