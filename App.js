@@ -157,10 +157,19 @@ export default class App extends Component {
   }
 
   loginSignup(){
-    this.setState({
-      ...this.state,
-      loginSignup: true
-    })
+    if(this.state.loginSignup){
+      this.setState({
+        ...this.state,
+        loginSignup: false
+      })
+    }
+    if(!this.state.loginSignup){
+      this.setState({
+        ...this.state,
+        loginSignup: true
+      })
+    }
+
   }
 
   dismissNewView(){
