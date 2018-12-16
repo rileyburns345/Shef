@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { View } from 'react-native';
-import { Container, Header, Content, Drawer, Root, Toast, Footer, Button, Text } from 'native-base'
+import { Container, Header, Content, Drawer, Root, Toast, Footer, Button, Text, Icon, Left, Right } from 'native-base'
 import SideBar from './src/components/SideBar/SideBar'
 import NavBar from './src/components/NavBar/NavBar'
 import RecipeList from './src/components/RecipeList/RecipeList'
@@ -35,15 +35,14 @@ export default class App extends Component {
         },
         body: JSON.stringify(loginInfo)
       })
-      // console.log('json: ', response);
       if(response.status === 200) {
       const json = await response.json()
       this.setState({
         ...this.state,
-        token: JSON.parse(response._bodyInit).token,
+        token: json.id,
         loginSignup: false
       })
-      // console. (this.state.token);
+      console.log(this.state.token);
       }
     }
 
@@ -196,11 +195,18 @@ export default class App extends Component {
           </Content>
           {this.state.token && !this.state.newView
             ? <Footer>
-                <Button onPress={()=>this.newRecipeOpen()} transparent>
-                  <Text>
-                    Add New Recipe
-                  </Text>
-                </Button>
+                <Left>
+                  <Button transparent>
+                    <Text>My Recipes</Text><Icon name='list'/>
+                  </Button>
+                </Left>
+                <Right>
+                  <Button onPress={()=>this.newRecipeOpen()} transparent>
+                    <Text>
+                      Add New Recipe
+                    </Text>
+                  </Button>
+                </Right>
               </Footer>
             : null
           }
