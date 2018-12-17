@@ -107,12 +107,15 @@ class SingleCardView extends Component {
                   }
                 </Left>
                 <Right>
-                  <Button onPress={()=>this.newRecipeOpen()} transparent>
-                    <Icon name="ios-add" />
-                    <Text>
-                      Version
-                    </Text>
-                  </Button>
+                  {this.props.token
+                    ? <Button onPress={()=>this.props.newVersion(card)} transparent>
+                        <Icon name="ios-add" />
+                        <Text>
+                          Version
+                        </Text>
+                      </Button>
+                    : null
+                  }
                 </Right>
               </CardItem>
             </Card>
