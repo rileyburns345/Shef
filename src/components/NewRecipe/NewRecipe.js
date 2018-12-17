@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native'
 import { Container, Header, Content, Form, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right, Card, CardItem } from 'native-base';
 
 class NewRecipe extends Component {
@@ -91,8 +92,17 @@ class NewRecipe extends Component {
   submit(){
     const { recipe_name, description, ingredients, course, diet, image_url, instructionsList } = this.state
     const newRecipe = { recipe_name, description, ingredients: JSON.stringify(ingredients), course, diet: JSON.stringify(diet), image_url, instructions: JSON.stringify(instructionsList) }
+    if (recipe_name === '' || description === '' || ingredients === [] || instructionsList === [] || diet === []) {
+      Toast.show({
+        text: 'please fill out all required forms',
+        buttonText: 'Okay'
+      })
+      return
+    }
+    else{
     this.props.newRecipe(newRecipe)
     this.dismiss()
+  }
   }
 
   dismiss(){
@@ -186,6 +196,7 @@ class NewRecipe extends Component {
   }
 
   render() {
+    console.log(this.state.description);
     return (
       <Card style={{flex: 1}}>
         <CardItem floatingLabel>
@@ -249,7 +260,9 @@ class NewRecipe extends Component {
         <CardItem>
         {this.state.ingredients.length > 0
           ? this.state.ingredients.map((ingredient)=>(
-            <Button rounded small success><Text>{ingredient}</Text><Icon onPress={() =>this.removeIngredient(ingredient)} name='close-circle'/></Button>
+            <Button rounded small success>
+            <Text>{ingredient}</Text>
+            <Icon onPress={() =>this.removeIngredient(ingredient)} name='close-circle'/></Button>
           ))
           : <Badge warning><Text>No Ingredients</Text></Badge>
         }
