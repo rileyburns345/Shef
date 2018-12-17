@@ -3,7 +3,12 @@ import { View, Image } from 'react-native'
 
   const ImageGenerator = ({recipe}) => (
      <Image source = {{uri: recipe.image_url}}
-     style = {{ width: 128, height: 128 }}
+     style = {{
+       width: null,
+       height: 200,
+       flex: 1,
+       resizeMode: 'cover'
+     }}
      />
   )
 
