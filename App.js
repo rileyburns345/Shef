@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, AsyncStorage } from 'react-native';
+import { View, AsyncStorage, ScrollView } from 'react-native';
 import { Container, Header, Content, Drawer, Root, Toast, Footer, Button, Text, Icon, Left, Right } from 'native-base'
 import SideBar from './src/components/SideBar/SideBar'
 import NavBar from './src/components/NavBar/NavBar'
@@ -128,7 +128,7 @@ export default class App extends Component {
         singleView: versions[0]
       })
     }
-    console.log(this)
+    setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
   }
 
   cardClick2 = (clickedRecipe) => {
@@ -137,7 +137,7 @@ export default class App extends Component {
       deck: false,
       singleView: clickedRecipe
     })
-    console.log(this.component)
+    setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
   }
 
   backClick = () => {
@@ -231,7 +231,7 @@ export default class App extends Component {
       ...this.state,
       newVersion: recipe
     })
-    console.log(this.component)
+    setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
   }
 
   dismissNewVersion(){
@@ -398,7 +398,7 @@ export default class App extends Component {
           <Drawer ref={(ref) => { this.drawer = ref; }}
           content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer} logoutClick={this.logoutClick}/>}
           onClose={() => this.closeDrawer()}>
-          <Content ref={view => this._scrollView = view}>
+          <ScrollView ref={(ref) => { this.scrollView = ref; }}>
             {this.state.deck ? <CardSwiper cardClick={this.cardClick2.bind(this)} deck={this.state.deck}/> : null}
             {this.state.newVersion ? <NewVersion recipe={this.state.newVersion} dismiss={this.dismissNewVersion.bind(this)} newVersion={this.postNewVersion.bind(this)} /> : null }
             {this.state.newView ? <NewRecipe dismiss={this.dismissNewView.bind(this)} newRecipe={this.newRecipe.bind(this)} /> : null}
@@ -406,7 +406,7 @@ export default class App extends Component {
             {this.state.singleView ? <SingleCardView
               deleteRecipeClick={this.deleteRecipeClick} newVersion={this.newVersion.bind(this)} token={this.state.token} favorites={this.state.favorites} addRemoveFavorite={this.addDeleteFavorite.bind(this)} backClick={this.backClick} card={this.state.singleView}/> : null}
             {this.state.singleView || this.state.newView || this.state.loginSignup || this.state.newVersion || this.state.deck ? null : <RecipeList token={this.state.token} newVersion={this.newVersion.bind(this)} searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
-          </Content>
+          </ScrollView>
           {this.state.token && !this.state.newView && !this.state.deck && !this.state.singleView
             ? <Footer>
                 <Left>
