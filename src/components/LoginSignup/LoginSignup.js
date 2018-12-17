@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Header, Content, Form, Button, Text, Item, Input, Label, Left, Right, Footer } from 'native-base';
+import { Container, Header, Content, Form, Button, CheckBox, Text, Item, Input, Label, Left, Right, Footer, Body } from 'native-base';
 
 class LoginSignup extends Component {
   constructor(props){
@@ -7,7 +7,9 @@ class LoginSignup extends Component {
     this.state = {
       ...this.state,
       email: '',
-      password: ''
+      password: '',
+      username: '',
+      checked: false
     }
   }
 
@@ -25,16 +27,32 @@ this.setState({
 })
 }
 
+onUsernameChange = (e) => {
+this.setState({
+  ...this.state,
+  username: e
+})
+}
+
+checkCheckBox = () => {
+  this.setState({
+    ...this.state,
+    checked: !this.state.checked
+  })
+}
+
 
 
 
 
 
   render() {
-    const { loginClick } = this.props
+    const { loginClick, signUpClick } = this.props
     let email = this.state.email
     let password = this.state.password
+    let username = this.state.username
     let loginInfo = { email, password }
+    let signUpInfo = { email, password, username }
 
     return (
       <Container>
@@ -59,15 +77,18 @@ this.setState({
           </Form>
           <Footer>
             <Left>
-              <Button onPress={() => loginClick(loginInfo)}>
-                <Text>Login</Text>
-              </Button>
+              {this.state.checked
+                ? <Button onPress={() => signUpClick(signUpInfo)}>
+                    <Text>Sign-Up</Text>
+                  </Button>
+                : <Button onPress={() => loginClick(loginInfo)}>
+                  <Text>Login</Text>
+                    </Button>
+              }
             </Left>
-            <Right>
-            <Button>
-              <Text>Sign-Up</Text>
-            </Button>
-            </Right>
+            <Body>
+              <CheckBox onPress={this.checkCheckBox} checked={false}/>
+            </Body>
           </Footer>
         </Content>
       </Container>
