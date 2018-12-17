@@ -8,6 +8,7 @@ import SingleCardView from './src/components/SingleCardView/SingleCardView'
 import LoginSignup from './src/components/LoginSignup/LoginSignup'
 import NewRecipe from './src/components/NewRecipe/NewRecipe'
 import NewVersion from './src/components/NewVersion/NewVersion'
+import CardSwiper from './src/components/CardSwiper/CardSwiper'
 
 const API = process.env.API || 'http://localhost:3000'
 
@@ -24,7 +25,8 @@ export default class App extends Component {
       token: false,
       loginSignup: false,
       newVersion: false,
-      versionFilter: []
+      versionFilter: [],
+      deck: false
     }
   }
 
@@ -109,14 +111,26 @@ export default class App extends Component {
   }
 
   cardClick = (clickedRecipe) => {
-    this.state.recipes.map(recipe => {
-      if (clickedRecipe.id === recipe.id) {
-        this.setState({
-          ...this.state,
-          singleView: recipe
-          })
-      }
+    const versions = this.state.recipes.filter((recipe)=>recipe.recipe_name === clickedRecipe.recipe_name)
+    if (versions.length > 1){
+      this.setState({
+        ...this.state,
+        deck: versions
       })
+    }else{
+      this.setState({
+        ...this.state,
+        singleView: versions[0]
+      })
+    }
+  }
+
+  cardClick2 = (clickedRecipe) => {
+    this.setState({
+      ...this.state,
+      deck: false,
+      singleView: clickedRecipe
+    })
   }
 
   backClick = () => {
@@ -255,23 +269,32 @@ export default class App extends Component {
      setTimeout(()=>this.getAllAPI(), 100)
  }
 
+ deckNullify(){
+   this.setState({
+     ...this.state,
+     deck: false,
+     singleView: false
+   })
+ }
+
   render() {
     let logger = []
     return (
       <Root>
         <Container >
-          <NavBar loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
+          <NavBar singleView={this.state.singleView} back={this.deckNullify.bind(this)} deck={this.state.deck} loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
           <Drawer ref={(ref) => { this.drawer = ref; }}
           content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer} logoutClick={this.logoutClick}/>}
           onClose={() => this.closeDrawer()}>
           <Content>
+            {this.state.deck ? <CardSwiper cardClick={this.cardClick2.bind(this)} deck={this.state.deck}/> : null}
             {this.state.newVersion ? <NewVersion recipe={this.state.newVersion} dismiss={this.dismissNewVersion.bind(this)} newVersion={this.postNewVersion.bind(this)} /> : null }
             {this.state.newView ? <NewRecipe dismiss={this.dismissNewView.bind(this)} newRecipe={this.newRecipe.bind(this)} /> : null}
             {this.state.loginSignup ? <LoginSignup loginClick={this.loginClick} signUpClick={this.signUpClick}/> : null}
             {this.state.singleView ? <SingleCardView backClick={this.backClick} card={this.state.singleView}/> : null}
-            {this.state.singleView || this.state.newView || this.state.loginSignup || this.state.newVersion ? null : <RecipeList token={this.state.token} newVersion={this.newVersion.bind(this)} searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
+            {this.state.singleView || this.state.newView || this.state.loginSignup || this.state.newVersion || this.state.deck ? null : <RecipeList token={this.state.token} newVersion={this.newVersion.bind(this)} searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </Content>
-          {this.state.token && !this.state.newView
+          {this.state.token && !this.state.newView && !this.state.deck && !this.state.singleView
             ? <Footer>
                 <Left>
                   <Button transparent>
