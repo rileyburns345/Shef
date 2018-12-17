@@ -145,6 +145,7 @@ export default class App extends Component {
       ...this.state,
       singleView: false
       })
+    setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
   }
 
   closeDrawer = () => {
@@ -163,12 +164,14 @@ export default class App extends Component {
           filteredRecipes: filteredRecipes,
           searchVal: `Search: ${searchString}`
         })
+        setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
       }else{
         this.setState({
           ...this.state,
           filteredRecipes: this.state.versionFilter,
           searchVal: 'Popular Recipes'
         })
+        setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
         // add toast or notification of 'no results'
         Toast.show({
           text: 'No Results',
@@ -181,6 +184,7 @@ export default class App extends Component {
         filteredRecipes: this.state.versionFilter,
         searchVal: 'Popular Recipes'
       })
+      setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
       // add toast or notification of 'no results'
       Toast.show({
         text: 'No Results',
@@ -216,7 +220,7 @@ export default class App extends Component {
         loginSignup: true
       })
     }
-
+    setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
   }
 
   dismissNewView(){
@@ -344,6 +348,7 @@ export default class App extends Component {
       filteredRecipes: results,
       searchVal: 'My Favorites'
     })
+    setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
   }
 
   myRecipes(){
