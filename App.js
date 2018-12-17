@@ -10,7 +10,7 @@ import NewRecipe from './src/components/NewRecipe/NewRecipe'
 import NewVersion from './src/components/NewVersion/NewVersion'
 import CardSwiper from './src/components/CardSwiper/CardSwiper'
 
-const API = process.env.API || 'http://localhost:3000'
+const API = process.env.API || 'https://shef-backend.herokuapp.com'
 
 
 export default class App extends Component {
@@ -128,6 +128,7 @@ export default class App extends Component {
         singleView: versions[0]
       })
     }
+    console.log(this)
   }
 
   cardClick2 = (clickedRecipe) => {
@@ -136,6 +137,7 @@ export default class App extends Component {
       deck: false,
       singleView: clickedRecipe
     })
+    console.log(this.component)
   }
 
   backClick = () => {
@@ -229,6 +231,7 @@ export default class App extends Component {
       ...this.state,
       newVersion: recipe
     })
+    console.log(this.component)
   }
 
   dismissNewVersion(){
@@ -370,12 +373,12 @@ export default class App extends Component {
           <Drawer ref={(ref) => { this.drawer = ref; }}
           content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer} logoutClick={this.logoutClick}/>}
           onClose={() => this.closeDrawer()}>
-          <Content>
+          <Content ref={view => this._scrollView = view}>
             {this.state.deck ? <CardSwiper cardClick={this.cardClick2.bind(this)} deck={this.state.deck}/> : null}
             {this.state.newVersion ? <NewVersion recipe={this.state.newVersion} dismiss={this.dismissNewVersion.bind(this)} newVersion={this.postNewVersion.bind(this)} /> : null }
             {this.state.newView ? <NewRecipe dismiss={this.dismissNewView.bind(this)} newRecipe={this.newRecipe.bind(this)} /> : null}
             {this.state.loginSignup ? <LoginSignup loginClick={this.loginClick} signUpClick={this.signUpClick}/> : null}
-            {this.state.singleView ? <SingleCardView token={this.state.token} favorites={this.state.favorites} addRemoveFavorite={this.addDeleteFavorite.bind(this)} backClick={this.backClick} card={this.state.singleView}/> : null}
+            {this.state.singleView ? <SingleCardView newVersion={this.newVersion.bind(this)} token={this.state.token} favorites={this.state.favorites} addRemoveFavorite={this.addDeleteFavorite.bind(this)} backClick={this.backClick} card={this.state.singleView}/> : null}
             {this.state.singleView || this.state.newView || this.state.loginSignup || this.state.newVersion || this.state.deck ? null : <RecipeList token={this.state.token} newVersion={this.newVersion.bind(this)} searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </Content>
           {this.state.token && !this.state.newView && !this.state.deck && !this.state.singleView

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, ScrollView } from 'react-native'
+import { H2, ListItem } from 'native-base'
 import Recipe from '../Recipe/Recipe'
 
 class RecipeList extends Component {
@@ -20,9 +21,9 @@ render() {
 const { viewStyle, textStyle } = styles
   return (
   <View>
-    <View>
-      <Text> {this.props.searchVal} </Text>
-    </View>
+    <ListItem>
+      <H2>{this.props.searchVal}</H2>
+    </ListItem>
     <ScrollView style={viewStyle}>
       {this.props.recipes.map((recipe, id) => (
         <Recipe token={this.props.token} newVersion={this.props.newVersion} recipe={recipe} key={id} cardClick={this.props.cardClick}/>

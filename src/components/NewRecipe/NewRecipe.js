@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Form, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right, Card, CardItem } from 'native-base';
 
 class NewRecipe extends Component {
   constructor(props){
@@ -187,20 +187,20 @@ class NewRecipe extends Component {
 
   render() {
     return (
-      <Form>
-        <Item floatingLabel>
+      <Card style={{flex: 1}}>
+        <CardItem floatingLabel>
           <Label>Recipe Name</Label>
           <Input onChangeText={this.onNameChangeHandler}/>
-        </Item>
-        <Item floatingLabel>
+        </CardItem>
+        <CardItem floatingLabel>
           <Label>Image URL</Label>
           <Input onChangeText={this.onImgURLChangeHandler}/>
-        </Item>
-        <Item floatingLabel>
+        </CardItem>
+        <CardItem floatingLabel>
           <Label>Description</Label>
           <Input onChangeText={this.onDescChangeHandler}/>
-        </Item>
-        <Item picker>
+        </CardItem>
+        <CardItem picker>
             <Picker
               mode="dropdown"
               iosIcon={<Icon name="ios-arrow-down-outline" />}
@@ -212,11 +212,11 @@ class NewRecipe extends Component {
               onValueChange={this.onCourseChange.bind(this)}
             >
               {this.state.courseOptions.map((option, idx)=>(
-                <Picker.Item label={option} value={option.toLowerCase()} />
+                <Picker.CardItem label={option} value={option.toLowerCase()} />
               ))}
             </Picker>
-          </Item>
-          <Item picker>
+          </CardItem>
+          <CardItem picker>
             <Picker
               mode="dropdown"
               iosIcon={<Icon name="ios-arrow-down-outline" />}
@@ -228,54 +228,54 @@ class NewRecipe extends Component {
               onValueChange={this.onDietChange.bind(this)}
             >
               {this.state.dietOptions.map((option, idx)=>(
-                <Picker.Item label={option} value={option.toLowerCase()} />
+                <Picker.CardItem label={option} value={option.toLowerCase()} />
               ))}
             </Picker>
-          </Item>
-          <Item>
+          </CardItem>
+          <CardItem>
           {this.state.diet.length > 0
             ? this.state.diet.map((_diet)=>(
               <Button rounded small success><Text>{_diet}</Text><Icon onPress={() =>this.removeDiet(_diet)} name='close-circle'/></Button>
             ))
             : <Badge warning><Text>No Ingredients</Text></Badge>
           }
-          </Item>
-        <Item>
+          </CardItem>
+        <CardItem>
           <Input value={this.state.ingredientsStr} name='ingredientsStr' onChangeText={this.onIngChangeHandler} placeholder='Ingredients'/>
           <Button primary small rounded disabled={this.state.ingredientsStr === '' ? true : false} onPress={()=>this.addIngredient()}>
             <Text>Add Ingredient</Text>
           </Button>
-        </Item>
-        <Item>
+        </CardItem>
+        <CardItem>
         {this.state.ingredients.length > 0
           ? this.state.ingredients.map((ingredient)=>(
             <Button rounded small success><Text>{ingredient}</Text><Icon onPress={() =>this.removeIngredient(ingredient)} name='close-circle'/></Button>
           ))
           : <Badge warning><Text>No Ingredients</Text></Badge>
         }
-        </Item>
-        <Item>
+        </CardItem>
+        <CardItem>
           <Text>Instructions:</Text>
-        </Item>
+        </CardItem>
         {this.state.instructionsList.length > 0
           ? this.state.instructionsList.map((instruction, idx)=>(
-            <Item><Button rounded small success><Icon onPress={()=>this.moveUp(instruction)} name='arrow-up'/><Text>{idx+1}: {instruction}</Text><Icon onPress={() =>this.removeInstruction(instruction)} name='close-circle'/><Icon onPress={()=>this.moveDown(instruction)} name='arrow-down'/></Button></Item>
+            <CardItem><Button rounded small success><Icon onPress={()=>this.moveUp(instruction)} name='arrow-up'/><Text>{idx+1}: {instruction}</Text><Icon onPress={() =>this.removeInstruction(instruction)} name='close-circle'/><Icon onPress={()=>this.moveDown(instruction)} name='arrow-down'/></Button></CardItem>
           ))
-          : <Item><Badge warning><Text>No Instructions</Text></Badge></Item>
+          : <CardItem><Badge warning><Text>No Instructions</Text></Badge></CardItem>
         }
-        <Item>
+        <CardItem>
           <Textarea value={this.state.instructions} onChangeText={this.onInstChangeHandler} rowSpan={5} placeholder='Instructions'/>
           <Button primary small rounded disabled={this.state.instructions === '' ? true : false} onPress={()=>this.addInstruction()}>
             <Text>Add Step</Text>
           </Button>
-        </Item>
-        <Item>
+        </CardItem>
+        <CardItem>
           <Button onPress={()=>this.submit()} transparent><Text>Submit</Text></Button>
-        </Item>
-        <Item>
+        </CardItem>
+        <CardItem>
           <Button onPress={()=>this.dismiss()} transparent><Text>Dismiss</Text></Button>
-        </Item>
-      </Form>
+        </CardItem>
+      </Card>
     )
   }
 }
