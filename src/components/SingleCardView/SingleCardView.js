@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { ScrollView } from 'react-native'
 import { Container, Header, Content, Card, CardItem, Image, Thumbnail, Text, Button, Icon, Left, Right, ListItem, Body } from 'native-base';
 
 class SingleCardView extends Component {
@@ -31,19 +30,19 @@ class SingleCardView extends Component {
   // ))}
 
   render(){
-    const {card, backClick} = this.props
+    const { card, backClick } = this.props
     const ingredientList = JSON.parse(card.ingredients)
     // const dietList = card.diet
     console.log('my Card', card);
-    console.log(typeof(card.diet));
     return (
           <Content>
             <Card style={{flex: 0}}>
               <CardItem>
                 <Left>
-                  <Text>{card.recipe_name}</Text>
+                  <Text href="#top">{card.recipe_name}</Text>
                   <Text></Text>
                 </Left>
+
                 <Right>
                   <Left>
                     {this.props.favorites.includes(card.id)

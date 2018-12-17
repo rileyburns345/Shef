@@ -272,15 +272,16 @@ export default class App extends Component {
      setTimeout(()=>this.getAllAPI(), 100)
  }
 
-  deckNullify(){
-   this.setState({
-     ...this.state,
-     deck: false,
-     singleView: false,
-     searchVal: 'Popular Recipes',
-     filteredRecipes: this.state.versionFilter
-   })
-  }
+ deckNullify(){
+    this.setState({
+      ...this.state,
+      deck: false,
+      singleView: false,
+      searchVal: 'Popular Recipes',
+      filteredRecipes: this.state.versionFilter,
+      favoritesView: false
+    })
+   }
 
   async getFavorites() {
     try {
@@ -356,6 +357,31 @@ export default class App extends Component {
     }
   }
 
+
+  deleteRecipeClick = (recipeID) => {
+    console.log('BEFORE DELETE', this.state);
+    letRecipeToDelete = this.state.recipes.filter(recipe => (recipe.id === recipeID))[0]
+    console.log('letRecipeToDelete',  letRecipeToDelete);
+    const response = await fetch(`${API}/recipes${letRecipeToDelete.id}`, {
+       method: 'DELETE',
+       headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        }
+      })
+      console.log('json: ', response);
+      if(response.status === 200) {
+      const json = await response.json()
+      const notDeletedRecipes = this.state.messages.filter(recipe => (recipe.id !== recipeID))
+      this.setState({
+        ...this.state,
+        recipes: notDeletedRecipes
+      })
+      }
+    }
+
+
+
+
   render() {
     let logger = []
     return (
@@ -370,7 +396,7 @@ export default class App extends Component {
             {this.state.newVersion ? <NewVersion recipe={this.state.newVersion} dismiss={this.dismissNewVersion.bind(this)} newVersion={this.postNewVersion.bind(this)} /> : null }
             {this.state.newView ? <NewRecipe dismiss={this.dismissNewView.bind(this)} newRecipe={this.newRecipe.bind(this)} /> : null}
             {this.state.loginSignup ? <LoginSignup loginClick={this.loginClick} signUpClick={this.signUpClick}/> : null}
-            {this.state.singleView ? <SingleCardView favorites={this.state.favorites} addRemoveFavorite={this.addDeleteFavorite.bind(this)} backClick={this.backClick} card={this.state.singleView}/> : null}
+            {this.state.singleView ? <SingleCardView deleteRecipeClick={this.deleteRecipeClick} favorites={this.state.favorites} addRemoveFavorite={this.addDeleteFavorite.bind(this)} backClick={this.backClick} card={this.state.singleView}/> : null}
             {this.state.singleView || this.state.newView || this.state.loginSignup || this.state.newVersion || this.state.deck ? null : <RecipeList token={this.state.token} newVersion={this.newVersion.bind(this)} searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </Content>
           {this.state.token && !this.state.newView && !this.state.deck && !this.state.singleView
