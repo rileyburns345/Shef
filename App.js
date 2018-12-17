@@ -28,7 +28,8 @@ export default class App extends Component {
       versionFilter: [],
       deck: false,
       favorites: [],
-      favoritesView: false
+      favoritesView: false,
+      actualToken: false
     }
   }
 
@@ -43,13 +44,14 @@ export default class App extends Component {
         body: JSON.stringify(loginInfo)
       })
       if(response.status === 200) {
-      const json = await response.json()
-      this.setState({
-        ...this.state,
-        token: json.id,
-        loginSignup: false
-      })
-      console.log(this.state.token);
+        const auth = response.headers.map.auth.slice(8, response.headers.map.auth.length)
+        const json = await response.json()
+        this.setState({
+          ...this.state,
+          token: json.id,
+          loginSignup: false,
+          actualToken: auth
+        })
       }
     }
 
@@ -265,7 +267,8 @@ export default class App extends Component {
        credentials: "same-origin", // include, *same-origin, omit
        headers: {
          'Accept': 'application/JSON',
-         'Content-Type': 'application/json'
+         'Content-Type': 'application/json',
+         'token': this.state.actualToken
        },
        body: JSON.stringify(recipe)
      })

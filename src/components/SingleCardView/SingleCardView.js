@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import { ScrollView } from 'react-native'
-import { Container, Header, Content, Card, CardItem, Image, Thumbnail, Text, Button, Icon, Left, Right, ListItem, Body } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Image, Thumbnail, Text, Button, Icon, Left, Right, ListItem, Body, Badge } from 'native-base';
 
 class SingleCardView extends Component {
 
@@ -61,17 +61,39 @@ class SingleCardView extends Component {
                     height: 200,
                     flex: 1
                   }}/>
-                  <Text>
-                  </Text>
+                  <ListItem>
+                    {JSON.parse(card.diet).map((dietItem)=>(
+                      <Badge success><Text>{dietItem}</Text></Badge>
+                    ))}
+                  </ListItem>
+                  <ListItem>
+                  <Text>Description</Text>
+                  </ListItem>
+                  <ListItem>
+                    <Text>
+                      {card.description}
+                    </Text>
+                  </ListItem>
+                  <ListItem>
                   <Text>Ingredients</Text>
+                  </ListItem>
                   {ingredientList.map((ingredient)=>(
                       <ListItem>
                         <Text>{ingredient}</Text>
                       </ListItem>
                   ))}
+                  <ListItem>
                   <Text>Instructions</Text>
-                  <Text>{card.instructions}</Text>
-                  <Text>Diet</Text>
+                  </ListItem>
+                  {JSON.parse(card.instructions).map((instruction, idx)=>{
+                    return(
+                      <ListItem>
+                        <Text>
+                          {idx+1}: {instruction}
+                        </Text>
+                      </ListItem>
+                    )
+                  })}
 
                 </Body>
               </CardItem>
