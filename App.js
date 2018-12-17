@@ -278,7 +278,8 @@ export default class App extends Component {
      deck: false,
      singleView: false,
      searchVal: 'Popular Recipes',
-     filteredRecipes: this.state.versionFilter
+     filteredRecipes: this.state.versionFilter,
+     favoritesView: false
    })
   }
 
