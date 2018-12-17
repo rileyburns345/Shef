@@ -28,7 +28,7 @@ class NavBar extends Component {
     return (
       <Header>
         <Left>
-          {this.props.deck || this.props.singleView
+          {this.props.deck || this.props.singleView || this.props.favoritesView
             ? <Button onPress={()=>this.props.back()} transparent>
                 <Icon name='arrow-back' />
               </Button>
@@ -43,7 +43,7 @@ class NavBar extends Component {
         <Right>
           {this.props.token
             ? <Button transparent>
-                <Icon name='star' />
+                <Icon onPress={()=>this.props.favoritesFilter()} name='star' />
               </Button>
             : <Button onPress={()=>this.props.loginSignup()} transparent>
                 <Icon name='ios-people' />

@@ -17,7 +17,6 @@ export default class CardSwiper extends Component {
                     <Thumbnail source={{uri: item.image_url}} />
                     <Body>
                       <Text>{item.description}</Text>
-                      <Text note>NativeBase</Text>
                     </Body>
                   </Left>
                 </CardItem>
@@ -25,10 +24,6 @@ export default class CardSwiper extends Component {
                   <Image style={{ height: 300, flex: 1 }} source={{uri: item.image_url}} />
                 </CardItem>
                 <CardItem>
-                  <Left>
-                    <Icon name="heart" style={{ color: '#ED4A6A' }} />
-                    <Text>{item.name}</Text>
-                  </Left>
                   <Right>
                     <Button onPress={() => this.props.cardClick(item)} transparent>
                       <Text>Read More</Text>
