@@ -36,6 +36,7 @@ export default class SideBar extends React.Component {
   }
 
   render() {
+    const { logoutClick } = this.props
     return (
       <Container>
         <Content>
@@ -70,7 +71,7 @@ export default class SideBar extends React.Component {
         </Content>
         {this.props.token
           ? <Footer>
-              <Button transparent>
+              <Button onPress={logoutClick} transparent>
                 <Text>
                   Logout
                 </Text>

@@ -62,8 +62,6 @@ export default class App extends Component {
         // console.log('json: ', response);
         if(response.status === 200) {
         const json = await response.json()
-        console.log('JJJJJSSSOOOOONNN', json);
-        console.log('RESPONSE', response);
         this.setState({
           ...this.state,
           token: json.id,
@@ -72,6 +70,13 @@ export default class App extends Component {
         console.log('TOKEN', this.state.token);
         }
       }
+
+      logoutClick = async () => {
+          this.setState({
+            ...this.state,
+            token: false
+          })
+          }
 
   async componentDidMount() {
     const response = await fetch(`${API}/recipes`)
@@ -257,7 +262,7 @@ export default class App extends Component {
         <Container >
           <NavBar loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
           <Drawer ref={(ref) => { this.drawer = ref; }}
-          content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer}/>}
+          content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer} logoutClick={this.logoutClick}/>}
           onClose={() => this.closeDrawer()}>
           <Content>
             {this.state.newVersion ? <NewVersion recipe={this.state.newVersion} dismiss={this.dismissNewVersion.bind(this)} newVersion={this.postNewVersion.bind(this)} /> : null }
