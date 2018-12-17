@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
-import { Container, Header, Content, Card, CardItem, Image, Thumbnail, Text, Button, Icon, Left, Right, ListItem, Body, Badge, H1, H2, Footer } from 'native-base';
+import { Container, Header, Content, Card, CardItem, ScrollView, Image, Thumbnail, Text, Button, Icon, Left, Right, ListItem, Body, Badge, H1, H2, Footer } from 'native-base';
 
 
 class SingleCardView extends Component {
@@ -32,17 +32,18 @@ class SingleCardView extends Component {
   // ))}
 
   render(){
-    const { card, backClick } = this.props
+    const { card, backClick, deleteRecipeClick } = this.props
     const ingredientList = JSON.parse(card.ingredients)
     // const dietList = card.diet
     console.log('my Card', card);
     return (
+
         <View>
           <Content>
             <Card style={{flex: 0}}>
               <CardItem>
                 <Left>
-                  <H2 href="#top">{card.recipe_name}</H2>
+                  <Text>{card.recipe_name}</Text>
                 </Left>
 
                 <Right>
@@ -99,7 +100,7 @@ class SingleCardView extends Component {
               <CardItem>
                 <Left>
                   {this.props.token === this.props.card.user_id
-                    ? <Button transparent>
+                    ? <Button onPress={() => deleteRecipeClick(card.id)}>
                         <Text>Delete</Text>
                       </Button>
                     : null
@@ -131,9 +132,7 @@ class SingleCardView extends Component {
         </View>
       );
   }
-
-
-
 }
+
 
 export default SingleCardView

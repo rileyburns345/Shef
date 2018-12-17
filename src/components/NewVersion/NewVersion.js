@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Form, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right } from 'native-base';
+import { Container, Header, Content, Form, Body, CardItem, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right } from 'native-base';
+import { Dimensions } from 'react-native'
 
 class NewVersion extends Component {
   constructor(props){
@@ -179,18 +180,19 @@ class NewVersion extends Component {
   }
 
   render() {
+    const { containerStyle, ingredientContainer, instructionContainer } = styles
     return (
-      <Form>
+      <Form style={ containerStyle }>
         <Item>
           <Text>{this.state.recipe_name}</Text>
         </Item>
         <Item floatingLabel>
           <Label>Image URL</Label>
-          <Input value={this.state.image_url} onChangeText={this.onImgURLChangeHandler}/>
+          <Input value={this.state.image_url} onChangeText={this.onImgURLChangeHandler} required/>
         </Item>
         <Item floatingLabel>
           <Label>Description</Label>
-          <Input value={this.state.description} onChangeText={this.onDescChangeHandler}/>
+          <Input value={this.state.description} onChangeText={this.onDescChangeHandler} required/>
         </Item>
         <Item picker>
             <Picker
@@ -233,12 +235,13 @@ class NewVersion extends Component {
           }
           </Item>
         <Item>
-          <Input value={this.state.ingredientsStr} name='ingredientsStr' onChangeText={this.onIngChangeHandler} placeholder='Ingredients'/>
+          <Input value={this.state.ingredientsStr} name='ingredientsStr' onChangeText={this.onIngChangeHandler} placeholder='Ingredients' required/>
           <Button primary small rounded disabled={this.state.ingredientsStr === '' ? true : false} onPress={()=>this.addIngredient()}>
             <Text>Add Ingredient</Text>
           </Button>
         </Item>
-        <Item>
+
+        <Item style={ingredientContainer}>
         {this.state.ingredients.length > 0
           ? this.state.ingredients.map((ingredient)=>(
             <Button rounded small success><Text>{ingredient}</Text><Icon onPress={() =>this.removeIngredient(ingredient)} name='close-circle'/></Button>
@@ -246,15 +249,32 @@ class NewVersion extends Component {
           : <Badge warning><Text>No Ingredients</Text></Badge>
         }
         </Item>
+
         <Item>
           <Text>Instructions:</Text>
         </Item>
+        <Item>
         {this.state.instructionsList.length > 0
-          ? this.state.instructionsList.map((instruction, idx)=>(
-            <Item><Button rounded small success><Icon onPress={()=>this.moveUp(instruction)} name='arrow-up'/><Text>{idx+1}: {instruction}</Text><Icon onPress={() =>this.removeInstruction(instruction)} name='close-circle'/><Icon onPress={()=>this.moveDown(instruction)} name='arrow-down'/></Button></Item>
+	         ? this.state.instructionsList.map((instruction, idx)=>(
+		      <CardItem>
+        	<Left style={{width: 10}}>
+                <Icon onPress={()=>this.moveUp(instruction)} name='arrow-up'/>
+            </Left>
+              	<Body>
+                <Text>
+					{idx+1}: {instruction}
+					<Icon onPress={() =>this.removeInstruction(instruction)} name='close-circle'/>
+				</Text>
+              </Body>
+              <Right>
+				<Icon onPress={()=>this.moveDown(instruction)} name='arrow-down'/>
+              </Right>
+            </CardItem>
           ))
-          : <Item><Badge warning><Text>No Instructions</Text></Badge></Item>
-        }
+	: <CardItem><Badge warning><Text>No Instructions</Text></Badge></CardItem>
+}
+        </Item>
+
         <Item>
           <Textarea value={this.state.instructions} onChangeText={this.onInstChangeHandler} rowSpan={5} placeholder='Instructions'/>
           <Button primary small rounded disabled={this.state.instructions === '' ? true : false} onPress={()=>this.addInstruction()}>
@@ -269,6 +289,23 @@ class NewVersion extends Component {
         </Item>
       </Form>
     )
+  }
+}
+
+const styles = {
+  containerStyle: {
+    backgroundColor: '#F8F8F8',
+    flex: 1,
+    // justifyContent: 'center',
+    // width: 'auto'
+    // flexDirection:'row'
+    maxWidth: Dimensions.get('window').width
+  },
+  ingredientContainer: {
+    flexWrap: 'wrap'
+  },
+  instructionContainer: {
+    width: '100%'
   }
 }
 
