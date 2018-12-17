@@ -98,7 +98,7 @@ class SingleCardView extends Component {
               <CardItem>
                 <Left>
                   {this.props.token === this.props.card.user_id
-                    ? <Button transparent>
+                    ? <Button onPress={}>
                         <Text>Delete</Text>
                       </Button>
                     : null
