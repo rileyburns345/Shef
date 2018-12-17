@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import { Container, Header, Content, Drawer, Root, Toast, Footer, Button, Text, Icon, Left, Right } from 'native-base'
 import SideBar from './src/components/SideBar/SideBar'
 import NavBar from './src/components/NavBar/NavBar'
@@ -269,13 +269,44 @@ export default class App extends Component {
      setTimeout(()=>this.getAllAPI(), 100)
  }
 
- deckNullify(){
+  deckNullify(){
    this.setState({
      ...this.state,
      deck: false,
      singleView: false
    })
- }
+  }
+
+  getFavorites(){
+
+  }
+
+  storeFavorites(){
+    _storeData = async () => {
+      try {
+        await AsyncStorage.setItem('favorites', JSON.stringify(this.state.favorites));
+      } catch (error) {
+        // Error saving data
+      }
+    }
+  }
+
+  addDeleteFavorite(id){
+    if(this.state.favorites.includes(id)){
+      const newState = this.state.favorites.filter((favorite)=>favorite.id !== id)
+      this.setState({
+        ...this.state,
+        favorites: newState
+      })
+    }else{
+      const newState = [...this.state.favorties, id].sort((a, b)=> a-b)
+      this.setState({
+        ...this.state,
+        favorites: newState
+      })
+    }
+    
+  }
 
   render() {
     let logger = []
