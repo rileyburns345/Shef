@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Container, Header, Content, Card, CardItem, Image, Thumbnail, Text, Button, Icon, Left, Right, ListItem, Body } from 'native-base';
+import { View } from 'react-native'
+import { Container, Header, Content, Card, CardItem, Image, Thumbnail, Text, Button, Icon, Left, Right, ListItem, Body, Badge, H1, H2, Footer } from 'native-base';
+
 
 class SingleCardView extends Component {
 
@@ -35,12 +37,12 @@ class SingleCardView extends Component {
     // const dietList = card.diet
     console.log('my Card', card);
     return (
+        <View>
           <Content>
             <Card style={{flex: 0}}>
               <CardItem>
                 <Left>
-                  <Text href="#top">{card.recipe_name}</Text>
-                  <Text></Text>
+                  <H2 href="#top">{card.recipe_name}</H2>
                 </Left>
 
                 <Right>
@@ -54,37 +56,76 @@ class SingleCardView extends Component {
                 </Right>
               </CardItem>
               <CardItem>
+                <Text note>{card.description}</Text>
+              </CardItem>
+              <CardItem>
                 <Body>
                   <Thumbnail square source = {{uri: card.image_url}} style = {{
                     width: 350,
                     height: 200,
                     flex: 1
                   }}/>
-                  <Text>
-                  </Text>
-                  <Text>Ingredients</Text>
+                  <ListItem>
+                    <Badge success><Text>{card.course}</Text></Badge>
+                  </ListItem>
+                  <ListItem>
+                    {JSON.parse(card.diet).map((dietItem)=>(
+                      <Badge success><Text>{dietItem}</Text></Badge>
+                    ))}
+                  </ListItem>
+                  <ListItem itemHeader>
+                  <H2>Ingredients</H2>
+                  </ListItem>
                   {ingredientList.map((ingredient)=>(
                       <ListItem>
                         <Text>{ingredient}</Text>
                       </ListItem>
                   ))}
-                  <Text>Instructions</Text>
-                  <Text>{card.instructions}</Text>
-                  <Text>Diet</Text>
+                  <ListItem itemHeader>
+                  <H2>Instructions</H2>
+                  </ListItem>
+                  {JSON.parse(card.instructions).map((instruction, idx)=>{
+                    return(
+                      <ListItem>
+                        <Text>
+                          {idx+1}: {instruction}
+                        </Text>
+                      </ListItem>
+                    )
+                  })}
 
                 </Body>
               </CardItem>
               <CardItem>
-
-
                 <Left>
+                  {this.props.token === this.props.card.user_id
+                    ? <Button transparent>
+                        <Text>Delete</Text>
+                      </Button>
+                    : null
+                  }
                 </Left>
                 <Right>
-
+                  <Button onPress={()=>this.newRecipeOpen()} transparent>
+                    <Icon name="ios-add" />
+                    <Text>
+                      Version
+                    </Text>
+                  </Button>
                 </Right>
               </CardItem>
             </Card>
           </Content>
+          <Footer>
+            <Left>
+
+
+            </Left>
+            <Right>
+
+            </Right>
+          </Footer>
+        </View>
       );
   }
 
