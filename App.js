@@ -239,6 +239,7 @@ export default class App extends Component {
   }
 
   postNewVersion(recipe){
+    recipe.user_id = this.state.token
     this.setState({
       ...this.state,
       newVersion: false
@@ -362,23 +363,24 @@ export default class App extends Component {
   }
 
 
-  deleteRecipeClick = (recipeID) => {
+  deleteRecipeClick = async (recipeID) => {
     console.log('BEFORE DELETE', this.state);
     letRecipeToDelete = this.state.recipes.filter(recipe => (recipe.id === recipeID))[0]
     console.log('letRecipeToDelete',  letRecipeToDelete);
-    const response = await fetch(`${API}/recipes${letRecipeToDelete.id}`, {
+    const response = await fetch(`${API}/recipes/${letRecipeToDelete.id}`, {
        method: 'DELETE',
        headers: {
-          "Content-Type": "application/json; charset=utf-8"
+          "Content-Type": "application/json; charset=utf-8",
+          "token": this.state.actualToken
         }
       })
       console.log('json: ', response);
       if(response.status === 200) {
       const json = await response.json()
-      const notDeletedRecipes = this.state.messages.filter(recipe => (recipe.id !== recipeID))
+      this.getAllAPI()
       this.setState({
         ...this.state,
-        recipes: notDeletedRecipes
+        singleView: false
       })
       }
     }
