@@ -370,7 +370,7 @@ export default class App extends Component {
     }
   }
 
-  async deleteRecipeClick(recipeID)
+  async deleteRecipeClick(recipeID){
     console.log('BEFORE DELETE', this.state);
     letRecipeToDelete = this.state.recipes.filter(recipe => (recipe.id === recipeID))[0]
     console.log('letRecipeToDelete',  letRecipeToDelete);
