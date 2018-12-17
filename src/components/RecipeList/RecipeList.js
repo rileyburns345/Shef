@@ -25,7 +25,7 @@ const { viewStyle, textStyle } = styles
     </View>
     <ScrollView style={viewStyle}>
       {this.props.recipes.map((recipe, id) => (
-        <Recipe recipe={recipe} key={id} cardClick={this.props.cardClick}/>
+        <Recipe token={this.props.token} newVersion={this.props.newVersion} recipe={recipe} key={id} cardClick={this.props.cardClick}/>
       ))}
     </ScrollView>
   </View>

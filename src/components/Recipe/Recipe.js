@@ -20,16 +20,16 @@ class Recipe extends Component {
             <ImageGenerator recipe={recipe}/>
           </CardItem>
           <CardItem>
-            <Left>
-              <Button transparent>
-                <Text>Like</Text>
-              </Button>
-            </Left>
-            <Body>
-              <Button transparent>
-                <Text>Comment</Text>
-              </Button>
-            </Body>
+            {this.props.token
+              ? <Left>
+                  <Button onPress={()=>this.props.newVersion(recipe)} transparent>
+                    <Text>Create Your Own</Text>
+                    <Icon name='ios-add'/>
+                  </Button>
+                </Left>
+              : <Left>
+                </Left>
+            }
             <Right>
             <Button onPress={() => cardClick(recipe)} transparent>
               <Text>Read More</Text>

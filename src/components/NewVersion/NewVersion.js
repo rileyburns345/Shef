@@ -1,30 +1,23 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Form, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right } from 'native-base';
 
-class NewRecipe extends Component {
+class NewVersion extends Component {
   constructor(props){
     super(props)
     this.state = {
       dietOptions: ['Dairy-free', 'Egg-free', 'Gluten-free', 'Nut-free', 'Soy-free', 'Sugar-free', 'Vegetarian'],
       courseOptions: ['Breakfast', 'Brunch', 'Lunch', 'Dinner', 'Dessert'],
-      course: '',
-      description: '',
-      diet: '',
+      course: this.props.recipe.course.toLowerCase() || '',
+      description: this.props.recipe.description || '',
+      diet: JSON.parse(this.props.recipe.diet) || '',
       dietInputStr: '',
-      image_url: '',
-      ingredients: [],
+      image_url: this.props.recipe.image_url || '',
+      ingredients: JSON.parse(this.props.recipe.ingredients) || [],
       ingredientsStr: '',
       instructions: '',
-      recipe_name: '',
-      instructionsList: []
+      recipe_name: this.props.recipe.recipe_name || '',
+      instructionsList: JSON.parse(this.props.recipe.instructions) || []
     }
-  }
-
-  onNameChangeHandler = (e) => {
-    this.setState({
-      ...this.state,
-      recipe_name: e
-    })
   }
 
   onDescChangeHandler = (e) => {
@@ -90,8 +83,8 @@ class NewRecipe extends Component {
 
   submit(){
     const { recipe_name, description, ingredients, course, diet, image_url, instructionsList } = this.state
-    const newRecipe = { recipe_name, description, ingredients: JSON.stringify(ingredients), course, diet: JSON.stringify(diet), image_url, instructions: JSON.stringify(instructionsList) }
-    this.props.newRecipe(newRecipe)
+    const newVersion = { recipe_name, description, ingredients: JSON.stringify(ingredients), course, diet: JSON.stringify(diet), image_url, instructions: JSON.stringify(instructionsList) }
+    this.props.newVersion(newVersion)
     this.dismiss()
   }
 
@@ -188,17 +181,16 @@ class NewRecipe extends Component {
   render() {
     return (
       <Form>
-        <Item floatingLabel>
-          <Label>Recipe Name</Label>
-          <Input onChangeText={this.onNameChangeHandler}/>
+        <Item>
+          <Text>{this.state.recipe_name}</Text>
         </Item>
         <Item floatingLabel>
           <Label>Image URL</Label>
-          <Input onChangeText={this.onImgURLChangeHandler}/>
+          <Input value={this.state.image_url} onChangeText={this.onImgURLChangeHandler}/>
         </Item>
         <Item floatingLabel>
           <Label>Description</Label>
-          <Input onChangeText={this.onDescChangeHandler}/>
+          <Input value={this.state.description} onChangeText={this.onDescChangeHandler}/>
         </Item>
         <Item picker>
             <Picker
@@ -280,4 +272,4 @@ class NewRecipe extends Component {
   }
 }
 
-export default NewRecipe
+export default NewVersion

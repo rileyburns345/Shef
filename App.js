@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import { View } from 'react-native';
-import { Container, Header, Content, Drawer, Root, Toast, Footer, Button, Text } from 'native-base'
+import { Container, Header, Content, Drawer, Root, Toast, Footer, Button, Text, Icon, Left, Right } from 'native-base'
 import SideBar from './src/components/SideBar/SideBar'
 import NavBar from './src/components/NavBar/NavBar'
 import RecipeList from './src/components/RecipeList/RecipeList'
 import SingleCardView from './src/components/SingleCardView/SingleCardView'
 import LoginSignup from './src/components/LoginSignup/LoginSignup'
 import NewRecipe from './src/components/NewRecipe/NewRecipe'
+import NewVersion from './src/components/NewVersion/NewVersion'
 
 const API = process.env.API || 'http://localhost:3000'
 
@@ -21,7 +22,9 @@ export default class App extends Component {
       searchVal: 'Popular Recipes',
       newView: false,
       token: false,
-      loginSignup: false
+      loginSignup: false,
+      newVersion: false,
+      versionFilter: []
     }
   }
 
@@ -35,15 +38,14 @@ export default class App extends Component {
         },
         body: JSON.stringify(loginInfo)
       })
-      // console.log('json: ', response);
       if(response.status === 200) {
       const json = await response.json()
       this.setState({
         ...this.state,
-        token: JSON.parse(response._bodyInit).token,
+        token: json.id,
         loginSignup: false
       })
-      // console. (this.state.token);
+      console.log(this.state.token);
       }
     }
 
@@ -62,7 +64,8 @@ export default class App extends Component {
         const json = await response.json()
         this.setState({
           ...this.state,
-          token: JSON.parse(response._bodyInit).token
+          token: json.id,
+          loginSignup: false
         })
         console.log('TOKEN', this.state.token);
         }
@@ -76,16 +79,33 @@ export default class App extends Component {
           }
 
   async componentDidMount() {
-    //get data from the API
-    // try {
     const response = await fetch(`${API}/recipes`)
     const json = await response.json()
+    const filtered = this.versionControlFilter(json)
     this.setState({
       ...this.state,
       recipes: json,
-      filteredRecipes: json
+      filteredRecipes: filtered,
+      versionFilter: filtered
     })
+  }
 
+  versionControlFilter(data){
+    // sort by date
+    const sortedByDate = data.sort((a, b)=> new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+    // filter by unique recipe_name
+    const unique = []
+    const map = new Map();
+    for (const item of sortedByDate) {
+        if(!map.has(item.recipe_name)){
+            map.set(item.recipe_name, true);    // set any value to Map
+            unique.push(item);
+        }
+    }
+    // sort by id to retain order
+    const newState = unique.sort((a, b)=> a.id-b.id)
+
+    return newState
   }
 
   cardClick = (clickedRecipe) => {
@@ -125,7 +145,7 @@ export default class App extends Component {
       }else{
         this.setState({
           ...this.state,
-          filteredRecipes: this.state.recipes,
+          filteredRecipes: this.state.versionFilter,
           searchVal: 'Popular Recipes'
         })
         // add toast or notification of 'no results'
@@ -137,7 +157,7 @@ export default class App extends Component {
     }else{
       this.setState({
         ...this.state,
-        filteredRecipes: this.state.recipes,
+        filteredRecipes: this.state.versionFilter,
         searchVal: 'Popular Recipes'
       })
       // add toast or notification of 'no results'
@@ -150,7 +170,9 @@ export default class App extends Component {
 
   newRecipe(recipe){
     // TIES INTO STATE WHEN LOGGED IN
+    recipe.user_id = this.state.token
     console.log(recipe);
+    this.postAPI(recipe)
   }
 
   newRecipeOpen(){
@@ -161,10 +183,19 @@ export default class App extends Component {
   }
 
   loginSignup(){
-    this.setState({
-      ...this.state,
-      loginSignup: true
-    })
+    if(this.state.loginSignup){
+      this.setState({
+        ...this.state,
+        loginSignup: false
+      })
+    }
+    if(!this.state.loginSignup){
+      this.setState({
+        ...this.state,
+        loginSignup: true
+      })
+    }
+
   }
 
   dismissNewView(){
@@ -173,6 +204,56 @@ export default class App extends Component {
       newView: false
     })
   }
+
+  newVersion(recipe){
+    this.setState({
+      ...this.state,
+      newVersion: recipe
+    })
+  }
+
+  dismissNewVersion(){
+    this.setState({
+      ...this.state,
+      newVersion: false
+    })
+  }
+
+  postNewVersion(recipe){
+    this.setState({
+      ...this.state,
+      newVersion: false
+    })
+    this.postAPI(recipe)
+    setTimeout(()=>this.getAllAPI(), 100)
+  }
+
+  async getAllAPI() {
+    const response = await fetch(`${API}/recipes`)
+    const json = await response.json()
+    const versionFiltered = this.versionControlFilter(json)
+    this.setState({
+      ...this.state,
+      recipes: json,
+      filteredRecipes: versionFiltered,
+      versionFilter: versionFiltered
+    })
+  }
+
+  async postAPI(recipe){
+   const response = await fetch (`${API}/recipes/`, {
+       method: 'POST',
+       mode: "cors", // no-cors, cors, *same-origin
+       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+       credentials: "same-origin", // include, *same-origin, omit
+       headers: {
+         'Accept': 'application/JSON',
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify(recipe)
+     })
+     setTimeout(()=>this.getAllAPI(), 100)
+ }
 
   render() {
     let logger = []
@@ -184,18 +265,26 @@ export default class App extends Component {
           content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer} logoutClick={this.logoutClick}/>}
           onClose={() => this.closeDrawer()}>
           <Content>
+            {this.state.newVersion ? <NewVersion recipe={this.state.newVersion} dismiss={this.dismissNewVersion.bind(this)} newVersion={this.postNewVersion.bind(this)} /> : null }
             {this.state.newView ? <NewRecipe dismiss={this.dismissNewView.bind(this)} newRecipe={this.newRecipe.bind(this)} /> : null}
             {this.state.loginSignup ? <LoginSignup loginClick={this.loginClick} signUpClick={this.signUpClick}/> : null}
             {this.state.singleView ? <SingleCardView backClick={this.backClick} card={this.state.singleView}/> : null}
-            {this.state.singleView || this.state.newView || this.state.loginSignup ? null : <RecipeList searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
+            {this.state.singleView || this.state.newView || this.state.loginSignup || this.state.newVersion ? null : <RecipeList token={this.state.token} newVersion={this.newVersion.bind(this)} searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </Content>
           {this.state.token && !this.state.newView
             ? <Footer>
-                <Button onPress={()=>this.newRecipeOpen()} transparent>
-                  <Text>
-                    Add New Recipe
-                  </Text>
-                </Button>
+                <Left>
+                  <Button transparent>
+                    <Text>My Recipes</Text><Icon name='list'/>
+                  </Button>
+                </Left>
+                <Right>
+                  <Button onPress={()=>this.newRecipeOpen()} transparent>
+                    <Text>
+                      Add New Recipe
+                    </Text>
+                  </Button>
+                </Right>
               </Footer>
             : null
           }

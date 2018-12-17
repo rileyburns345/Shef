@@ -43,12 +43,19 @@ this.setState({
           <Form>
             <Item floatingLabel>
               <Label>Email</Label>
-              <Input id='email' onChangeText={this.onemailChange} placeholder=''/>
+              <Input id='email' autoCapitalize="none" onChangeText={this.onemailChange} placeholder=''/>
             </Item>
             <Item floatingLabel>
               <Label>Password</Label>
-              <Input id='password' onChangeText={this.onPasswordChange} placeholder=''/>
+              <Input autoCapitalize="none" secureTextEntry={true} id='password' onChangeText={this.onPasswordChange} placeholder=''/>
             </Item>
+            {this.state.checked
+              ? <Item floatingLabel>
+                <Label>Username</Label>
+                <Input autoCapitalize="none" id='username' onChangeText={this.onUsernameChange} placeholder=''/>
+              </Item>
+              : null
+            }
           </Form>
           <Footer>
             <Left>
