@@ -28,9 +28,14 @@ class NavBar extends Component {
     return (
       <Header>
         <Left>
-          <Button onPress={()=>this.props.openDrawer()} transparent>
-            <Icon name='menu' />
-          </Button>
+          {this.props.deck || this.props.singleView
+            ? <Button onPress={()=>this.props.back()} transparent>
+                <Icon name='arrow-back' />
+              </Button>
+            : <Button onPress={()=>this.props.openDrawer()} transparent>
+                <Icon name='menu' />
+              </Button>
+          }
         </Left>
         <Body>
           <Title style={textStyle}> Shef </Title>
