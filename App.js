@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import { Container, Header, Content, Drawer, Root, Toast, Footer, Button, Text, Icon, Left, Right } from 'native-base'
 import SideBar from './src/components/SideBar/SideBar'
 import NavBar from './src/components/NavBar/NavBar'
@@ -26,7 +26,9 @@ export default class App extends Component {
       loginSignup: false,
       newVersion: false,
       versionFilter: [],
-      deck: false
+      deck: false,
+      favorites: [],
+      favoritesView: false
     }
   }
 
@@ -90,6 +92,7 @@ export default class App extends Component {
       filteredRecipes: filtered,
       versionFilter: filtered
     })
+    this.getFavorites()
   }
 
   versionControlFilter(data){
@@ -269,20 +272,96 @@ export default class App extends Component {
      setTimeout(()=>this.getAllAPI(), 100)
  }
 
- deckNullify(){
+  deckNullify(){
    this.setState({
      ...this.state,
      deck: false,
-     singleView: false
+     singleView: false,
+     searchVal: 'Popular Recipes',
+     filteredRecipes: this.state.versionFilter
    })
- }
+  }
+
+  async getFavorites() {
+    try {
+      const value = await AsyncStorage.getItem('favorites');
+      if (value !== null) {
+        // We have data!!
+        this.setState({
+          ...this.state,
+          favorites: JSON.parse(value)
+        })
+      }
+     } catch (error) {
+       this.storeFavorites()
+     }
+  }
+
+  async storeFavorites(){
+    try {
+      await AsyncStorage.setItem('favorites', JSON.stringify(this.state.favorites));
+    } catch (error) {
+      // Error saving data
+      console.log('error at store');
+    }
+  }
+
+  addDeleteFavorite(id){
+    if(this.state.favorites.includes(id)){
+      const newState = this.state.favorites.filter((favorite)=>favorite.id !== id)
+      this.setState({
+        ...this.state,
+        favorites: newState
+      })
+    }else{
+      const newState = [...this.state.favorites, id].sort((a, b)=> a-b)
+      this.setState({
+        ...this.state,
+        favorites: newState
+      })
+    }
+    setTimeout(()=>this.storeFavorites(), 10)
+  }
+
+  favoritesFilter(){
+    let results = []
+    const { recipes } = this.state
+    this.state.favorites.forEach(function(favorite){
+      const value = recipes.filter((recipe)=>recipe.id === favorite)[0]
+      results.push(value)
+    })
+    this.setState({
+      ...this.state,
+      favoritesView: true,
+      filteredRecipes: results,
+      searchVal: 'My Favorites'
+    })
+  }
+
+  myRecipes(){
+    if(!this.state.token)return
+    const filtered = this.state.recipes.filter((recipe)=>recipe.user_id === this.state.token)
+    if(filtered.length > 0){
+      this.setState({
+        ...this.state,
+        filteredRecipes: filtered,
+        favoritesView: true,
+        searchVal: 'My Recipes'
+      })
+    }else{
+      Toast.show({
+        text: 'You have no recipes',
+        buttonText: 'Okay'
+      })
+    }
+  }
 
   render() {
     let logger = []
     return (
       <Root>
         <Container >
-          <NavBar singleView={this.state.singleView} back={this.deckNullify.bind(this)} deck={this.state.deck} loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
+          <NavBar favoritesFilter={this.favoritesFilter.bind(this)} favoritesView={this.state.favoritesView} singleView={this.state.singleView} back={this.deckNullify.bind(this)} deck={this.state.deck} loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
           <Drawer ref={(ref) => { this.drawer = ref; }}
           content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer} logoutClick={this.logoutClick}/>}
           onClose={() => this.closeDrawer()}>
@@ -291,13 +370,13 @@ export default class App extends Component {
             {this.state.newVersion ? <NewVersion recipe={this.state.newVersion} dismiss={this.dismissNewVersion.bind(this)} newVersion={this.postNewVersion.bind(this)} /> : null }
             {this.state.newView ? <NewRecipe dismiss={this.dismissNewView.bind(this)} newRecipe={this.newRecipe.bind(this)} /> : null}
             {this.state.loginSignup ? <LoginSignup loginClick={this.loginClick} signUpClick={this.signUpClick}/> : null}
-            {this.state.singleView ? <SingleCardView backClick={this.backClick} card={this.state.singleView}/> : null}
+            {this.state.singleView ? <SingleCardView favorites={this.state.favorites} addRemoveFavorite={this.addDeleteFavorite.bind(this)} backClick={this.backClick} card={this.state.singleView}/> : null}
             {this.state.singleView || this.state.newView || this.state.loginSignup || this.state.newVersion || this.state.deck ? null : <RecipeList token={this.state.token} newVersion={this.newVersion.bind(this)} searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </Content>
           {this.state.token && !this.state.newView && !this.state.deck && !this.state.singleView
             ? <Footer>
                 <Left>
-                  <Button transparent>
+                  <Button onPress={()=>this.myRecipes()} transparent>
                     <Text>My Recipes</Text><Icon name='list'/>
                   </Button>
                 </Left>

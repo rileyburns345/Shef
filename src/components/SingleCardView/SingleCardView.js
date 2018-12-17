@@ -41,12 +41,18 @@ class SingleCardView extends Component {
             <Card style={{flex: 0}}>
               <CardItem>
                 <Left>
-
-                  <Body>
-                    <Text>{card.recipe_name}</Text>
-                    <Text></Text>
-                  </Body>
+                  <Text>{card.recipe_name}</Text>
+                  <Text></Text>
                 </Left>
+                <Right>
+                  <Left>
+                    {this.props.favorites.includes(card.id)
+                      ? <Icon onPress={()=>this.props.addRemoveFavorite(card.id)} name="ios-heart" style={{ color: '#ED4A6A' }} />
+                      : <Icon onPress={()=>this.props.addRemoveFavorite(card.id)} name="ios-heart-outline" style={{ color: '#ED4A6A' }} />
+                    }
+
+                  </Left>
+                </Right>
               </CardItem>
               <CardItem>
                 <Body>
