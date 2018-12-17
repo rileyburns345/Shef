@@ -282,7 +282,8 @@ export default class App extends Component {
      singleView: false,
      searchVal: 'Popular Recipes',
      filteredRecipes: this.state.versionFilter,
-     favoritesView: false
+     favoritesView: false,
+     loginSignup: false
    })
   }
 
@@ -365,7 +366,7 @@ export default class App extends Component {
     return (
       <Root>
         <Container >
-          <NavBar favoritesFilter={this.favoritesFilter.bind(this)} favoritesView={this.state.favoritesView} singleView={this.state.singleView} back={this.deckNullify.bind(this)} deck={this.state.deck} loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
+          <NavBar loginSignupCheck={this.state.loginSignup} favoritesFilter={this.favoritesFilter.bind(this)} favoritesView={this.state.favoritesView} singleView={this.state.singleView} back={this.deckNullify.bind(this)} deck={this.state.deck} loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
           <Drawer ref={(ref) => { this.drawer = ref; }}
           content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer} logoutClick={this.logoutClick}/>}
           onClose={() => this.closeDrawer()}>
@@ -374,7 +375,7 @@ export default class App extends Component {
             {this.state.newVersion ? <NewVersion recipe={this.state.newVersion} dismiss={this.dismissNewVersion.bind(this)} newVersion={this.postNewVersion.bind(this)} /> : null }
             {this.state.newView ? <NewRecipe dismiss={this.dismissNewView.bind(this)} newRecipe={this.newRecipe.bind(this)} /> : null}
             {this.state.loginSignup ? <LoginSignup loginClick={this.loginClick} signUpClick={this.signUpClick}/> : null}
-            {this.state.singleView ? <SingleCardView favorites={this.state.favorites} addRemoveFavorite={this.addDeleteFavorite.bind(this)} backClick={this.backClick} card={this.state.singleView}/> : null}
+            {this.state.singleView ? <SingleCardView token={this.state.token} favorites={this.state.favorites} addRemoveFavorite={this.addDeleteFavorite.bind(this)} backClick={this.backClick} card={this.state.singleView}/> : null}
             {this.state.singleView || this.state.newView || this.state.loginSignup || this.state.newVersion || this.state.deck ? null : <RecipeList token={this.state.token} newVersion={this.newVersion.bind(this)} searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </Content>
           {this.state.token && !this.state.newView && !this.state.deck && !this.state.singleView

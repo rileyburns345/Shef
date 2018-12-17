@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-// import { ScrollView } from 'react-native'
-import { Container, Header, Content, Card, CardItem, Image, Thumbnail, Text, Button, Icon, Left, Right, ListItem, Body, Badge } from 'native-base';
+import { View } from 'react-native'
+import { Container, Header, Content, Card, CardItem, Image, Thumbnail, Text, Button, Icon, Left, Right, ListItem, Body, Badge, H1, H2, Footer } from 'native-base';
 
 class SingleCardView extends Component {
 
@@ -37,12 +37,12 @@ class SingleCardView extends Component {
     console.log('my Card', card);
     console.log(typeof(card.diet));
     return (
+        <View>
           <Content>
             <Card style={{flex: 0}}>
               <CardItem>
                 <Left>
-                  <Text>{card.recipe_name}</Text>
-                  <Text></Text>
+                  <H2>{card.recipe_name}</H2>
                 </Left>
                 <Right>
                   <Left>
@@ -55,6 +55,9 @@ class SingleCardView extends Component {
                 </Right>
               </CardItem>
               <CardItem>
+                <Text note>{card.description}</Text>
+              </CardItem>
+              <CardItem>
                 <Body>
                   <Thumbnail square source = {{uri: card.image_url}} style = {{
                     width: 350,
@@ -62,28 +65,23 @@ class SingleCardView extends Component {
                     flex: 1
                   }}/>
                   <ListItem>
+                    <Badge success><Text>{card.course}</Text></Badge>
+                  </ListItem>
+                  <ListItem>
                     {JSON.parse(card.diet).map((dietItem)=>(
                       <Badge success><Text>{dietItem}</Text></Badge>
                     ))}
                   </ListItem>
-                  <ListItem>
-                  <Text>Description</Text>
-                  </ListItem>
-                  <ListItem>
-                    <Text>
-                      {card.description}
-                    </Text>
-                  </ListItem>
-                  <ListItem>
-                  <Text>Ingredients</Text>
+                  <ListItem itemHeader>
+                  <H2>Ingredients</H2>
                   </ListItem>
                   {ingredientList.map((ingredient)=>(
                       <ListItem>
                         <Text>{ingredient}</Text>
                       </ListItem>
                   ))}
-                  <ListItem>
-                  <Text>Instructions</Text>
+                  <ListItem itemHeader>
+                  <H2>Instructions</H2>
                   </ListItem>
                   {JSON.parse(card.instructions).map((instruction, idx)=>{
                     return(
@@ -98,16 +96,35 @@ class SingleCardView extends Component {
                 </Body>
               </CardItem>
               <CardItem>
-
-
                 <Left>
+                  {this.props.token === this.props.card.user_id
+                    ? <Button transparent>
+                        <Text>Delete</Text>
+                      </Button>
+                    : null
+                  }
                 </Left>
                 <Right>
-
+                  <Button onPress={()=>this.newRecipeOpen()} transparent>
+                    <Icon name="ios-add" />
+                    <Text>
+                      Version
+                    </Text>
+                  </Button>
                 </Right>
               </CardItem>
             </Card>
           </Content>
+          <Footer>
+            <Left>
+
+
+            </Left>
+            <Right>
+
+            </Right>
+          </Footer>
+        </View>
       );
   }
 

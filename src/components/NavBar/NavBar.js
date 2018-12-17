@@ -28,7 +28,7 @@ class NavBar extends Component {
     return (
       <Header>
         <Left>
-          {this.props.deck || this.props.singleView || this.props.favoritesView
+          {this.props.deck || this.props.singleView || this.props.favoritesView || this.props.loginSignupCheck
             ? <Button onPress={()=>this.props.back()} transparent>
                 <Icon name='arrow-back' />
               </Button>
