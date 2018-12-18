@@ -41,12 +41,18 @@ checkCheckBox = () => {
   })
 }
 
-
-
-
-
-
   render() {
+    const styles = {
+      loginStyle: {
+        backgroundColor: 'maroon'
+      },
+      fieldStyle: {
+        color: 'maroon',
+        letterSpacing: 1
+      }
+    }
+    const {loginStyle, fieldStyle} = styles
+
     const { loginClick, signUpClick } = this.props
     let email = this.state.email
     let password = this.state.password
@@ -58,12 +64,12 @@ checkCheckBox = () => {
       <Content>
         <Form>
           <Item floatingLabel>
-            <Label>Email</Label>
-            <Input id='email' autoCapitalize="none" onChangeText={this.onemailChange} placeholder=''/>
+            <Label style={fieldStyle}>Email</Label>
+            <Input style={fieldStyle} id='email' autoCapitalize="none" onChangeText={this.onemailChange} placeholder=''/>
           </Item>
           <Item floatingLabel>
-            <Label>Password</Label>
-            <Input autoCapitalize="none" secureTextEntry={true} id='password' onChangeText={this.onPasswordChange} placeholder=''/>
+            <Label style={fieldStyle}>Password</Label>
+            <Input style={fieldStyle} autoCapitalize="none" secureTextEntry={true} id='password' onChangeText={this.onPasswordChange} placeholder=''/>
           </Item>
           {this.state.checked
             ? <Item floatingLabel>
@@ -76,10 +82,10 @@ checkCheckBox = () => {
         <Footer>
           <Left>
             {this.state.checked
-              ? <Button onPress={() => signUpClick(signUpInfo)}>
+              ? <Button style={loginStyle} onPress={() => signUpClick(signUpInfo)}>
                   <Text>Sign-Up</Text>
                 </Button>
-              : <Button onPress={() => loginClick(loginInfo)}>
+              : <Button style={loginStyle} onPress={() => loginClick(loginInfo)}>
                 <Text>Login</Text>
                   </Button>
             }

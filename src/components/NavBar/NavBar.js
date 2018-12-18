@@ -50,7 +50,7 @@ class NavBar extends Component {
         <Right>
           {this.props.token
             ? <Button transparent>
-                <Icon onPress={()=>this.props.favoritesFilter()} name='star' />
+                <Icon style={iconStyle} onPress={()=>this.props.favoritesFilter()} name='star' />
               </Button>
             : <Button onPress={()=>this.props.loginSignup()} transparent>
                 <Icon style={iconStyle} name='ios-people' />
