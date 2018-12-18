@@ -32,6 +32,19 @@ class SingleCardView extends Component {
   // ))}
 
   render(){
+    const styles = {
+      titleStyle: {
+        fontSize: 30,
+        color: 'maroon'
+      },
+      backgroundStyle: {
+        backgroundColor: 'maroon',
+        color: 'white'
+      }
+    }
+    
+    const { titleStyle, backgroundStyle } = styles
+
     const { card, backClick, deleteRecipeClick } = this.props
     const ingredientList = JSON.parse(card.ingredients)
     // const dietList = card.diet
@@ -42,9 +55,7 @@ class SingleCardView extends Component {
           <Content>
             <Card style={{flex: 0}}>
               <CardItem>
-                <Left>
-                  <Text>{card.recipe_name}</Text>
-                </Left>
+                  <Text style={titleStyle}>{card.recipe_name}</Text>
 
                 <Right>
                   <Left>
@@ -67,15 +78,15 @@ class SingleCardView extends Component {
                     flex: 1
                   }}/>
                   <ListItem>
-                    <Badge success><Text>{card.course}</Text></Badge>
+                    <Badge style={backgroundStyle}><Text>{card.course}</Text></Badge>
                   </ListItem>
                   <ListItem>
                     {JSON.parse(card.diet).map((dietItem)=>(
-                      <Badge success><Text>{dietItem}</Text></Badge>
+                      <Badge><Text>{dietItem}</Text></Badge>
                     ))}
                   </ListItem>
                   <ListItem itemHeader>
-                  <H2>Ingredients</H2>
+                  <Text style={titleStyle}>Ingredients</Text>
                   </ListItem>
                   {ingredientList.map((ingredient)=>(
                       <ListItem>
@@ -83,7 +94,7 @@ class SingleCardView extends Component {
                       </ListItem>
                   ))}
                   <ListItem itemHeader>
-                  <H2>Instructions</H2>
+                  <Text style={titleStyle}>Instructions</Text>
                   </ListItem>
                   {JSON.parse(card.instructions).map((instruction, idx)=>{
                     return(

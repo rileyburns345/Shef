@@ -187,24 +187,46 @@ class NewRecipe extends Component {
   }
 
   render() {
+    const styles = {
+      textStyle: {
+        fontSize: 15,
+        color: 'maroon'
+      },
+      backgroundStyle: {
+        color: 'white',
+        backgroundColor: 'maroon',
+        justifyContent: 'center'
+      },
+      newRecipeStyle: {
+        color: 'maroon',
+        fontSize: 30
+      },
+      footerText: {
+        color: 'white'
+      },
+      footerStyle: {
+        backgroundColor: 'maroon'
+      }
+    }
+    const { textStyle, backgroundStyle, newRecipeStyle, footerText, footerStyle } = styles
     return (
       <Form>
         <Item>
           <ListItem>
-            <H2>New Recipe</H2>
+            <Text style={newRecipeStyle}>New Recipe</Text>
           </ListItem>
         </Item>
         <Item floatingLabel>
-          <Label>Recipe Name</Label>
-          <Input value={this.state.recipe_name} onChangeText={this.onNameChangeHandler} required/>
+          <Label style={textStyle}>Recipe Name</Label>
+          <Input style={textStyle} value={this.state.recipe_name} onChangeText={this.onNameChangeHandler} required/>
         </Item>
         <Item floatingLabel>
-          <Label>Image URL</Label>
-          <Input value={this.state.image_url} onChangeText={this.onImgURLChangeHandler} required/>
+          <Label style={textStyle}>Image URL</Label>
+          <Input style={textStyle} value={this.state.image_url} onChangeText={this.onImgURLChangeHandler} required/>
         </Item>
         <Item floatingLabel>
-          <Label>Description</Label>
-          <Input value={this.state.description} onChangeText={this.onDescChangeHandler} required/>
+          <Label style={textStyle}>Description</Label>
+          <Input style={textStyle} value={this.state.description} onChangeText={this.onDescChangeHandler} required/>
         </Item>
         <Item picker>
             <Picker
@@ -243,45 +265,45 @@ class NewRecipe extends Component {
             ? this.state.diet.map((_diet)=>(
               <Button rounded small info><Text>{_diet}</Text><Icon onPress={() =>this.removeDiet(_diet)} name='close-circle'/></Button>
             ))
-            : <Badge warning><Text>No Ingredients</Text></Badge>
+            : <Badge warning><Text>No Diet Selected</Text></Badge>
           }
           </Item>
         <Item>
-          <Input value={this.state.ingredientsStr} name='ingredientsStr' onChangeText={this.onIngChangeHandler} placeholder='Ingredients' required/>
+          <Input style={textStyle} value={this.state.ingredientsStr} name='ingredientsStr' onChangeText={this.onIngChangeHandler} placeholder='Ingredients' required/>
         </Item>
         <Item>
-          <Button info small rounded disabled={this.state.ingredientsStr === '' ? true : false} onPress={()=>this.addIngredient()}>
+          <Button style={backgroundStyle} info small rounded disabled={this.state.ingredientsStr === '' ? true : false} onPress={()=>this.addIngredient()}>
             <Text>Add Ingredient</Text>
           </Button>
         </Item>
         <Item>
         {this.state.ingredients.length > 0
           ? this.state.ingredients.map((ingredient)=>(
-            <Button rounded small info><Text>{ingredient}</Text><Icon onPress={() =>this.removeIngredient(ingredient)} name='close-circle'/></Button>
+            <Button rounded small><Text>{ingredient}</Text><Icon onPress={() =>this.removeIngredient(ingredient)} name='close-circle'/></Button>
           ))
           : <Badge warning><Text>No Ingredients</Text></Badge>
         }
         </Item>
           <ListItem itemHeader>
-            <Text>Instructions:</Text>
+            <Text style={textStyle}>Instructions:</Text>
           </ListItem>
         {this.state.instructionsList.length > 0
 	         ? this.state.instructionsList.map((instruction, idx)=>(
-             <SwipeRow style={{paddingLeft: 20}} leftOpenValue={75} rightOpenValue={-75} left={ <Button info onPress={()=>this.moveUp(instruction)}><Icon active name="arrow-up" /></Button> } body={<View><Text>{idx+1}: {instruction}</Text></View>} right={ <Button info onPress={()=>this.moveDown(instruction)}><Icon active name="arrow-down" /></Button>}/>
+             <SwipeRow style={{paddingLeft: 20}} leftOpenValue={75} rightOpenValue={-75} left={ <Button style={backgroundStyle} onPress={()=>this.moveUp(instruction)}><Icon active name="arrow-up" /></Button> } body={<View><Text>{idx+1}: {instruction}</Text></View>} right={ <Button style={backgroundStyle} onPress={()=>this.moveDown(instruction)}><Icon active name="arrow-down" /></Button>}/>
            ))
         	: <List><ListItem><Badge warning><Text>No Instructions</Text></Badge></ListItem></List>
         }
         <Item>
-          <Textarea value={this.state.instructions} onChangeText={this.onInstChangeHandler} rowSpan={5} placeholder='Instructions'/>
+          <Textarea style={textStyle} value={this.state.instructions} onChangeText={this.onInstChangeHandler} rowSpan={5} placeholder='Instructions'/>
         </Item>
         <Item>
-          <Button primary small rounded disabled={this.state.instructions === '' ? true : false} onPress={()=>this.addInstruction()}>
+          <Button style={backgroundStyle} small rounded disabled={this.state.instructions === '' ? true : false} onPress={()=>this.addInstruction()}>
             <Text>Add Step</Text>
           </Button>
         </Item>
-        <Footer>
-          <Button onPress={()=>this.dismiss()} transparent><Text>Dismiss</Text></Button>
-          <Button onPress={()=>this.submit()} transparent><Text>Submit</Text></Button>
+        <Footer style={footerStyle}>
+          <Button onPress={()=>this.dismiss()} transparent><Text style={footerText}>Dismiss</Text></Button>
+          <Button onPress={()=>this.submit()} transparent><Text style={footerText}>Submit</Text></Button>
         </Footer>
       </Form>
     )

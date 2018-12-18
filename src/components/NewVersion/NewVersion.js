@@ -181,21 +181,46 @@ class NewVersion extends Component {
   }
 
   render() {
-    const { containerStyle, ingredientContainer, instructionContainer } = styles
+    const styles = {
+      containerStyle: {
+        backgroundColor: '#F8F8F8',
+        flex: 1,
+        maxWidth: Dimensions.get('window').width
+      },
+      ingredientContainer: {
+        flexWrap: 'wrap'
+      },
+      instructionContainer: {
+        width: '100%'
+      },
+      textStyle: {
+        color: 'white'
+      },
+      backgroundStyle: {
+        color: 'white',
+        backgroundColor: 'maroon',
+        justifyContent: 'center'
+      },
+      filterTextStyle: {
+        color: 'maroon'
+      }
+    }
+
+    const { containerStyle, ingredientContainer, instructionContainer, textStyle, backgroundStyle, filterTextStyle } = styles
     console.log(this.state.instructionsList);
     return (
       <Form style={ containerStyle }>
         <Item>
           <ListItem>
-            <H2>{this.state.recipe_name}</H2>
+            <Text style={filterTextStyle}>{this.state.recipe_name}</Text>
           </ListItem>
         </Item>
         <Item floatingLabel>
-          <Label>Image URL</Label>
+          <Label style={filterTextStyle}>Image URL</Label>
           <Input value={this.state.image_url} onChangeText={this.onImgURLChangeHandler} required/>
         </Item>
         <Item floatingLabel>
-          <Label>Description</Label>
+          <Label style={filterTextStyle}>Description</Label>
           <Input value={this.state.description} onChangeText={this.onDescChangeHandler} required/>
         </Item>
         <Item picker>
@@ -233,7 +258,7 @@ class NewVersion extends Component {
           <Item>
           {this.state.diet.length > 0
             ? this.state.diet.map((_diet)=>(
-              <Button rounded small info><Text>{_diet}</Text><Icon onPress={() =>this.removeDiet(_diet)} name='close-circle'/></Button>
+              <Button style={backgroundStyle} rounded small><Text>{_diet}</Text><Icon onPress={() =>this.removeDiet(_diet)} name='close-circle'/></Button>
             ))
             : <Badge warning><Text>No Ingredients</Text></Badge>
           }
@@ -242,14 +267,14 @@ class NewVersion extends Component {
           <Input value={this.state.ingredientsStr} name='ingredientsStr' onChangeText={this.onIngChangeHandler} placeholder='Ingredients' required/>
         </Item>
         <Item>
-          <Button info small rounded disabled={this.state.ingredientsStr === '' ? true : false} onPress={()=>this.addIngredient()}>
+          <Button style={backgroundStyle} small rounded disabled={this.state.ingredientsStr === '' ? true : false} onPress={()=>this.addIngredient()}>
             <Text>Add Ingredient</Text>
           </Button>
         </Item>
         <Item style={ingredientContainer}>
         {this.state.ingredients.length > 0
           ? this.state.ingredients.map((ingredient)=>(
-            <Button rounded small info><Text>{ingredient}</Text><Icon onPress={() =>this.removeIngredient(ingredient)} name='close-circle'/></Button>
+            <Button style={backgroundStyle} rounded small><Text>{ingredient}</Text><Icon onPress={() =>this.removeIngredient(ingredient)} name='close-circle'/></Button>
           ))
           : <Badge warning><Text>No Ingredients</Text></Badge>
         }
@@ -259,7 +284,7 @@ class NewVersion extends Component {
           </ListItem>
         {this.state.instructionsList.length > 0
 	         ? this.state.instructionsList.map((instruction, idx)=>(
-             <SwipeRow style={{paddingLeft: 20}} leftOpenValue={75} rightOpenValue={-75} left={ <Button info onPress={()=>this.moveUp(instruction)}><Icon active name="arrow-up" /></Button> } body={<View><Text>{idx+1}: {instruction}</Text></View>} right={ <Button info onPress={()=>this.moveDown(instruction)}><Icon active name="arrow-down" /></Button>}/>
+             <SwipeRow style={{paddingLeft: 20}} leftOpenValue={75} rightOpenValue={-75} left={ <Button style={backgroundStyle} onPress={()=>this.moveUp(instruction)}><Icon active name="arrow-up" /></Button> } body={<View><Text>{idx+1}: {instruction}</Text></View>} right={ <Button style={backgroundStyle} onPress={()=>this.moveDown(instruction)}><Icon active name="arrow-down" /></Button>}/>
            ))
         	: <List><ListItem><Badge warning><Text>No Instructions</Text></Badge></ListItem></List>
         }
@@ -267,33 +292,16 @@ class NewVersion extends Component {
           <Textarea value={this.state.instructions} onChangeText={this.onInstChangeHandler} rowSpan={5} placeholder='Instructions'/>
         </Item>
         <Item>
-          <Button primary small rounded disabled={this.state.instructions === '' ? true : false} onPress={()=>this.addInstruction()}>
+          <Button style={backgroundStyle} small rounded disabled={this.state.instructions === '' ? true : false} onPress={()=>this.addInstruction()}>
             <Text>Add Step</Text>
           </Button>
         </Item>
-        <Footer>
-          <Button onPress={()=>this.dismiss()} transparent><Text>Dismiss</Text></Button>
-          <Button onPress={()=>this.submit()} transparent><Text>Submit</Text></Button>
+        <Footer style={backgroundStyle}>
+          <Button onPress={()=>this.dismiss()} transparent><Text style={textStyle}>Dismiss</Text></Button>
+          <Button onPress={()=>this.submit()} transparent><Text style={textStyle}>Submit</Text></Button>
         </Footer>
       </Form>
     )
-  }
-}
-
-const styles = {
-  containerStyle: {
-    backgroundColor: '#F8F8F8',
-    flex: 1,
-    // justifyContent: 'center',
-    // width: 'auto'
-    // flexDirection:'row'
-    maxWidth: Dimensions.get('window').width
-  },
-  ingredientContainer: {
-    flexWrap: 'wrap'
-  },
-  instructionContainer: {
-    width: '100%'
   }
 }
 

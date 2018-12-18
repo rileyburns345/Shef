@@ -36,6 +36,21 @@ export default class SideBar extends React.Component {
   }
 
   render() {
+    const styles = {
+      textStyle: {
+        fontSize: 20,
+        color: 'white'
+      },
+      backgroundStyle: {
+        backgroundColor: 'maroon',
+        justifyContent: 'center'
+      },
+      filterTextStyle: {
+        color: 'maroon'
+      }
+    }
+    const { textStyle, backgroundStyle, filterTextStyle } = styles
+    
     const { logoutClick } = this.props
     return (
       <Container>
@@ -43,28 +58,28 @@ export default class SideBar extends React.Component {
           <List>
             <ListItem searchBar rounded>
               <Item>
-                <Icon name="ios-search" />
-                <Input id='filter' name='filter'
+                <Icon style={filterTextStyle} name="ios-search" />
+                <Input style={filterTextStyle} id='filter' name='filter'
                 onChangeText={this.onInputChange} placeholder="Search" />
               </Item>
               <Button onPress={()=>this.handleSubmit()} transparent>
-                <Text>Search</Text>
+                <Text style={filterTextStyle}>Search</Text>
               </Button>
             </ListItem>
-            <ListItem itemDivider>
-              <Text>Browse by Diet:</Text>
+            <ListItem itemDivider style={backgroundStyle}>
+              <Text style={textStyle}>Browse by Diet:</Text>
             </ListItem>
             {this.state.diets.map((diet)=>(
               <ListItem onPress={()=>this.handleCategory(diet.toLowerCase())}>
-                <Text>{diet}</Text>
+                <Text style={filterTextStyle}>{diet}</Text>
               </ListItem>
             ))}
-            <ListItem itemDivider>
-              <Text>Browse by Course:</Text>
+            <ListItem itemDivider style={backgroundStyle}>
+              <Text style={textStyle}>Browse by Course:</Text>
             </ListItem>
             {this.state.courses.map((course)=>(
               <ListItem onPress={()=>this.handleCategory(course.toLowerCase())}>
-                <Text>{course}</Text>
+                <Text style={filterTextStyle}>{course}</Text>
               </ListItem>
             ))}
           </List>

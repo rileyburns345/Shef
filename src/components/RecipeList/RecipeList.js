@@ -18,11 +18,24 @@ class RecipeList extends Component {
     }
 
 render() {
-const { viewStyle, textStyle } = styles
+  const styles = {
+    textStyle: {
+      fontSize: 20,
+      color: 'white'
+    },
+    backgroundStyle: {
+      backgroundColor: 'maroon',
+      justifyContent: 'space-around',
+      padding: 20,
+      margin: 15
+    }
+  }
+
+const { viewStyle, textStyle, backgroundStyle } = styles
   return (
   <View>
-    <ListItem>
-      <H2>{this.props.searchVal}</H2>
+    <ListItem style={backgroundStyle}>
+      <Text style={textStyle}>{this.props.searchVal}</Text>
     </ListItem>
     <ScrollView style={viewStyle}>
       {this.props.recipes.map((recipe, id) => (
@@ -31,13 +44,6 @@ const { viewStyle, textStyle } = styles
     </ScrollView>
   </View>
     )
-  }
-}
-
-const styles = {
-  textStyle: {
-    fontSize: 25,
-    alignItems: 'center'
   }
 }
 
