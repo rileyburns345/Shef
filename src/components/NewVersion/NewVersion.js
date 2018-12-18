@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Form, Body, CardItem, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right } from 'native-base';
+import { Container, Header, Content, Form, Body, CardItem, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right, Card, List, ListItem, SwipeRow, View, H2 } from 'native-base';
 import { Dimensions } from 'react-native'
 
 class NewVersion extends Component {
@@ -155,7 +155,7 @@ class NewVersion extends Component {
       ...this.state,
       instructionsList: newState
     })
-
+    this.props.forceAnUpdate()
   }
 
   moveDown(value){
@@ -177,14 +177,18 @@ class NewVersion extends Component {
       ...this.state,
       instructionsList: newState
     })
+    this.props.forceAnUpdate()
   }
 
   render() {
     const { containerStyle, ingredientContainer, instructionContainer } = styles
+    console.log(this.state.instructionsList);
     return (
       <Form style={ containerStyle }>
         <Item>
-          <Text>{this.state.recipe_name}</Text>
+          <ListItem>
+            <H2>{this.state.recipe_name}</H2>
+          </ListItem>
         </Item>
         <Item floatingLabel>
           <Label>Image URL</Label>
@@ -229,64 +233,48 @@ class NewVersion extends Component {
           <Item>
           {this.state.diet.length > 0
             ? this.state.diet.map((_diet)=>(
-              <Button rounded small success><Text>{_diet}</Text><Icon onPress={() =>this.removeDiet(_diet)} name='close-circle'/></Button>
+              <Button rounded small info><Text>{_diet}</Text><Icon onPress={() =>this.removeDiet(_diet)} name='close-circle'/></Button>
             ))
             : <Badge warning><Text>No Ingredients</Text></Badge>
           }
           </Item>
         <Item>
           <Input value={this.state.ingredientsStr} name='ingredientsStr' onChangeText={this.onIngChangeHandler} placeholder='Ingredients' required/>
-          <Button primary small rounded disabled={this.state.ingredientsStr === '' ? true : false} onPress={()=>this.addIngredient()}>
+        </Item>
+        <Item>
+          <Button info small rounded disabled={this.state.ingredientsStr === '' ? true : false} onPress={()=>this.addIngredient()}>
             <Text>Add Ingredient</Text>
           </Button>
         </Item>
-
         <Item style={ingredientContainer}>
         {this.state.ingredients.length > 0
           ? this.state.ingredients.map((ingredient)=>(
-            <Button rounded small success><Text>{ingredient}</Text><Icon onPress={() =>this.removeIngredient(ingredient)} name='close-circle'/></Button>
+            <Button rounded small info><Text>{ingredient}</Text><Icon onPress={() =>this.removeIngredient(ingredient)} name='close-circle'/></Button>
           ))
           : <Badge warning><Text>No Ingredients</Text></Badge>
         }
         </Item>
-
-        <Item>
-          <Text>Instructions:</Text>
-        </Item>
-        <Item>
+          <ListItem itemHeader>
+            <Text>Instructions:</Text>
+          </ListItem>
         {this.state.instructionsList.length > 0
 	         ? this.state.instructionsList.map((instruction, idx)=>(
-		      <CardItem>
-        	<Left style={{width: 10}}>
-                <Icon onPress={()=>this.moveUp(instruction)} name='arrow-up'/>
-            </Left>
-              	<Body>
-                <Text>
-					{idx+1}: {instruction}
-					<Icon onPress={() =>this.removeInstruction(instruction)} name='close-circle'/>
-				</Text>
-              </Body>
-              <Right>
-				<Icon onPress={()=>this.moveDown(instruction)} name='arrow-down'/>
-              </Right>
-            </CardItem>
-          ))
-	: <CardItem><Badge warning><Text>No Instructions</Text></Badge></CardItem>
-}
-        </Item>
-
+             <SwipeRow style={{paddingLeft: 20}} leftOpenValue={75} rightOpenValue={-75} left={ <Button info onPress={()=>this.moveUp(instruction)}><Icon active name="arrow-up" /></Button> } body={<View><Text>{idx+1}: {instruction}</Text></View>} right={ <Button info onPress={()=>this.moveDown(instruction)}><Icon active name="arrow-down" /></Button>}/>
+           ))
+        	: <List><ListItem><Badge warning><Text>No Instructions</Text></Badge></ListItem></List>
+        }
         <Item>
           <Textarea value={this.state.instructions} onChangeText={this.onInstChangeHandler} rowSpan={5} placeholder='Instructions'/>
+        </Item>
+        <Item>
           <Button primary small rounded disabled={this.state.instructions === '' ? true : false} onPress={()=>this.addInstruction()}>
             <Text>Add Step</Text>
           </Button>
         </Item>
-        <Item>
-          <Button onPress={()=>this.submit()} transparent><Text>Submit</Text></Button>
-        </Item>
-        <Item>
+        <Footer>
           <Button onPress={()=>this.dismiss()} transparent><Text>Dismiss</Text></Button>
-        </Item>
+          <Button onPress={()=>this.submit()} transparent><Text>Submit</Text></Button>
+        </Footer>
       </Form>
     )
   }

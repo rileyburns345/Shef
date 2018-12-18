@@ -392,7 +392,9 @@ export default class App extends Component {
       }
     }
 
-
+    forceAnUpdate(){
+      setTimeout(()=>this.forceUpdate(),1)
+    }
 
 
   render() {
@@ -406,7 +408,7 @@ export default class App extends Component {
           onClose={() => this.closeDrawer()}>
           <ScrollView ref={(ref) => { this.scrollView = ref; }}>
             {this.state.deck ? <CardSwiper cardClick={this.cardClick2.bind(this)} deck={this.state.deck}/> : null}
-            {this.state.newVersion ? <NewVersion recipe={this.state.newVersion} dismiss={this.dismissNewVersion.bind(this)} newVersion={this.postNewVersion.bind(this)} /> : null }
+            {this.state.newVersion ? <NewVersion forceAnUpdate={this.forceAnUpdate.bind(this)} recipe={this.state.newVersion} dismiss={this.dismissNewVersion.bind(this)} newVersion={this.postNewVersion.bind(this)} /> : null }
             {this.state.newView ? <NewRecipe dismiss={this.dismissNewView.bind(this)} newRecipe={this.newRecipe.bind(this)} /> : null}
             {this.state.loginSignup ? <LoginSignup loginClick={this.loginClick} signUpClick={this.signUpClick}/> : null}
             {this.state.singleView ? <SingleCardView

@@ -55,43 +55,40 @@ checkCheckBox = () => {
     let signUpInfo = { email, password, username }
 
     return (
-      <Container>
-        <Header />
-        <Content>
-          <Form>
-            <Item floatingLabel>
-              <Label>Email</Label>
-              <Input id='email' autoCapitalize="none" onChangeText={this.onemailChange} placeholder=''/>
+      <Content>
+        <Form>
+          <Item floatingLabel>
+            <Label>Email</Label>
+            <Input id='email' autoCapitalize="none" onChangeText={this.onemailChange} placeholder=''/>
+          </Item>
+          <Item floatingLabel>
+            <Label>Password</Label>
+            <Input autoCapitalize="none" secureTextEntry={true} id='password' onChangeText={this.onPasswordChange} placeholder=''/>
+          </Item>
+          {this.state.checked
+            ? <Item floatingLabel>
+              <Label>Username</Label>
+              <Input autoCapitalize="none" id='username' onChangeText={this.onUsernameChange} placeholder=''/>
             </Item>
-            <Item floatingLabel>
-              <Label>Password</Label>
-              <Input autoCapitalize="none" secureTextEntry={true} id='password' onChangeText={this.onPasswordChange} placeholder=''/>
-            </Item>
+            : null
+          }
+        </Form>
+        <Footer>
+          <Left>
             {this.state.checked
-              ? <Item floatingLabel>
-                <Label>Username</Label>
-                <Input autoCapitalize="none" id='username' onChangeText={this.onUsernameChange} placeholder=''/>
-              </Item>
-              : null
-            }
-          </Form>
-          <Footer>
-            <Left>
-              {this.state.checked
-                ? <Button onPress={() => signUpClick(signUpInfo)}>
-                    <Text>Sign-Up</Text>
+              ? <Button onPress={() => signUpClick(signUpInfo)}>
+                  <Text>Sign-Up</Text>
+                </Button>
+              : <Button onPress={() => loginClick(loginInfo)}>
+                <Text>Login</Text>
                   </Button>
-                : <Button onPress={() => loginClick(loginInfo)}>
-                  <Text>Login</Text>
-                    </Button>
-              }
-            </Left>
-            <Body>
-              <CheckBox onPress={this.checkCheckBox} checked={false}/>
-            </Body>
-          </Footer>
-        </Content>
-      </Container>
+            }
+          </Left>
+          <Body>
+            <CheckBox onPress={this.checkCheckBox} checked={false}/>
+          </Body>
+        </Footer>
+      </Content>
     )
   }
 }
