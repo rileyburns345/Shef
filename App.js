@@ -398,6 +398,16 @@ export default class App extends Component {
 
 
   render() {
+    const styles = {
+      footerText: {
+        color: 'white'
+      },
+      footerStyle: {
+        backgroundColor: 'maroon'
+      }
+    }
+    const { footerText, footerStyle } = styles
+
     let logger = []
     return (
       <Root>
@@ -416,15 +426,15 @@ export default class App extends Component {
             {this.state.singleView || this.state.newView || this.state.loginSignup || this.state.newVersion || this.state.deck ? null : <RecipeList token={this.state.token} newVersion={this.newVersion.bind(this)} searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </ScrollView>
           {this.state.token && !this.state.newView && !this.state.deck && !this.state.singleView
-            ? <Footer>
+            ? <Footer style={footerStyle}>
                 <Left>
                   <Button onPress={()=>this.myRecipes()} transparent>
-                    <Text>My Recipes</Text><Icon name='list'/>
+                    <Text style={footerText}>My Recipes</Text><Icon style={footerText} name='list'/>
                   </Button>
                 </Left>
                 <Right>
                   <Button onPress={()=>this.newRecipeOpen()} transparent>
-                    <Text>
+                    <Text style={footerText}>
                       Add New Recipe
                     </Text>
                   </Button>
