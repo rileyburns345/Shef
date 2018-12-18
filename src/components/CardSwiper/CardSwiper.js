@@ -1,17 +1,33 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import { Content, Footer, Container, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Body, Icon, Button, Right, H2 } from 'native-base';
+import { version } from 'punycode';
 export default class CardSwiper extends Component {
   render() {
+    const styles = {
+      textStyle: {
+        fontSize: 20,
+        color: 'white'
+      },
+      backgroundStyle: {
+        backgroundColor: 'maroon',
+        justifyContent: 'center'
+      },
+      versionStyle: {
+        color: 'maroon'
+      }
+    }
+    const { textStyle, backgroundStyle, versionStyle } = styles
+
     const { deck } = this.props
     return (
       <View>
         <View>
           <Card>
-            <CardItem>
-              <H2>
+            <CardItem style={backgroundStyle}>
+              <Text style={textStyle}>
                 Versions of {deck[0].recipe_name}:
-              </H2>
+              </Text>
             </CardItem>
           </Card>
         </View>
@@ -25,7 +41,7 @@ export default class CardSwiper extends Component {
                   <Left>
                     <Thumbnail source={{uri: item.image_url}} />
                     <Body>
-                      <Text>{item.description}</Text>
+                      <Text style={versionStyle}>{item.description}</Text>
                       <Text note>Version {deck.indexOf(item)+1}</Text>
                     </Body>
                   </Left>
@@ -38,11 +54,11 @@ export default class CardSwiper extends Component {
           />
         </View>
         <View style={{ flexDirection: "row", flex: 1, position: "absolute", bottom: -650, left: 0, right: 0, justifyContent: 'space-between', padding: 15 }}>
-          <Button rounded iconLeft onPress={() => this._deckSwiper._root.swipeLeft()}>
+          <Button style={backgroundStyle} rounded iconLeft onPress={() => this._deckSwiper._root.swipeLeft()}>
             <Icon name="arrow-back" />
             <Text>Swipe Left</Text>
           </Button>
-          <Button rounded iconRight onPress={() => this._deckSwiper._root.swipeRight()}>
+          <Button style={backgroundStyle} rounded iconRight onPress={() => this._deckSwiper._root.swipeRight()}>
             <Text>Swipe Right</Text>
             <Icon name="arrow-forward" />
           </Button>

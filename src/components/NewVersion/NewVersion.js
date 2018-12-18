@@ -181,13 +181,26 @@ class NewVersion extends Component {
   }
 
   render() {
+    const styles = {
+      containerStyle: {
+        backgroundColor: '#F8F8F8',
+        flex: 1,
+        maxWidth: Dimensions.get('window').width
+      },
+      ingredientContainer: {
+        flexWrap: 'wrap'
+      },
+      instructionContainer: {
+        width: '100%'
+      }
+    }
     const { containerStyle, ingredientContainer, instructionContainer } = styles
     console.log(this.state.instructionsList);
     return (
       <Form style={ containerStyle }>
         <Item>
           <ListItem>
-            <H2>{this.state.recipe_name}</H2>
+            <Text>{this.state.recipe_name}</Text>
           </ListItem>
         </Item>
         <Item floatingLabel>
@@ -277,23 +290,6 @@ class NewVersion extends Component {
         </Footer>
       </Form>
     )
-  }
-}
-
-const styles = {
-  containerStyle: {
-    backgroundColor: '#F8F8F8',
-    flex: 1,
-    // justifyContent: 'center',
-    // width: 'auto'
-    // flexDirection:'row'
-    maxWidth: Dimensions.get('window').width
-  },
-  ingredientContainer: {
-    flexWrap: 'wrap'
-  },
-  instructionContainer: {
-    width: '100%'
   }
 }
 
