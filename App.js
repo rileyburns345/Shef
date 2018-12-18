@@ -423,12 +423,15 @@ export default class App extends Component {
         singleView: false
       })
       }
-      let newFavorites = this.state.favorites
-      if(this.state.favorites.includes(recipeID)){ newFavorites = this.state.favorites.filter((favorite)=>favorite !== recipeID}
-      this.setState({
-        ...this.state,
-        favorites: newFavorites
-      })
+
+      if(this.state.favorites.includes(recipeID)){
+        const newFavorites = this.state.favorites.filter((favorite)=>favorite !== recipeID)
+        this.setState({
+          ...this.state,
+          favorites: newFavorites
+        })
+      }
+
     }
 
     forceAnUpdate(){
