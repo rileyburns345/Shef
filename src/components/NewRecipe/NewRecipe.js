@@ -289,7 +289,7 @@ class NewRecipe extends Component {
           </ListItem>
         {this.state.instructionsList.length > 0
 	         ? this.state.instructionsList.map((instruction, idx)=>(
-             <SwipeRow style={{paddingLeft: 20}} leftOpenValue={75} rightOpenValue={-75} left={ <Button info onPress={()=>this.moveUp(instruction)}><Icon active name="arrow-up" /></Button> } body={<View><Text>{idx+1}: {instruction}</Text></View>} right={ <Button info onPress={()=>this.moveDown(instruction)}><Icon active name="arrow-down" /></Button>}/>
+             <SwipeRow style={{paddingLeft: 20}} leftOpenValue={75} rightOpenValue={-75} left={ <Button style={backgroundStyle} onPress={()=>this.moveUp(instruction)}><Icon active name="arrow-up" /></Button> } body={<View><Text>{idx+1}: {instruction}</Text></View>} right={ <Button style={backgroundStyle} onPress={()=>this.moveDown(instruction)}><Icon active name="arrow-down" /></Button>}/>
            ))
         	: <List><ListItem><Badge warning><Text>No Instructions</Text></Badge></ListItem></List>
         }

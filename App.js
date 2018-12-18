@@ -429,7 +429,7 @@ export default class App extends Component {
             ? <Footer style={footerStyle}>
                 <Left>
                   <Button onPress={()=>this.myRecipes()} transparent>
-                    <Text style={footerText}>My Recipes</Text><Icon style={footerText} name='list'/>
+                    <Icon style={footerText} name='list'/><Text style={footerText}>My Recipes</Text>
                   </Button>
                 </Left>
                 <Right>

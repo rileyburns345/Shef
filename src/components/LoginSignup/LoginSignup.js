@@ -73,8 +73,8 @@ checkCheckBox = () => {
           </Item>
           {this.state.checked
             ? <Item floatingLabel>
-              <Label>Username</Label>
-              <Input autoCapitalize="none" id='username' onChangeText={this.onUsernameChange} placeholder=''/>
+              <Label style={fieldStyle}>Username</Label>
+              <Input style={fieldStyle} autoCapitalize="none" id='username' onChangeText={this.onUsernameChange} placeholder=''/>
             </Item>
             : null
           }
