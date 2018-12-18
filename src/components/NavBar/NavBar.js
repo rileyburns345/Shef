@@ -11,37 +11,41 @@ class NavBar extends Component {
 
     const styles = {
       viewStyle: {
-        backgroundColor: '#F8F8F8',
+        backgroundColor: 'maroon',
         justifyContent: 'flex-end',
         alignItems: 'center',
         height: 90,
         paddingBottom: 15,
         shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2,  },
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         elevation: 2,
         position: 'relative'
       },
+      iconStyle: {
+        color: 'white'
+      },
       textStyle: {
-        fontSize: 30,
+        fontSize: 40,
+        color: 'white',
         fontFamily: Fonts.Cinzel
       }
     }
-    const {textStyle, viewStyle} = styles
+    const {textStyle, viewStyle, iconStyle} = styles
     return (
-      <Header>
+      <Header style={viewStyle}>
         <Left>
           {this.props.deck || this.props.singleView || this.props.favoritesView || this.props.loginSignupCheck
             ? <Button onPress={()=>this.props.back()} transparent>
-                <Icon name='arrow-back' />
+                <Icon style={iconStyle} name='arrow-back' />
               </Button>
             : <Button onPress={()=>this.props.openDrawer()} transparent>
-                <Icon name='menu' />
+                <Icon style={iconStyle} name='menu' />
               </Button>
           }
         </Left>
         <Body>
-          <Title style={textStyle}> Shef </Title>
+          <Title style={textStyle}> shef </Title>
         </Body>
         <Right>
           {this.props.token
@@ -49,7 +53,7 @@ class NavBar extends Component {
                 <Icon onPress={()=>this.props.favoritesFilter()} name='star' />
               </Button>
             : <Button onPress={()=>this.props.loginSignup()} transparent>
-                <Icon name='ios-people' />
+                <Icon style={iconStyle} name='ios-people' />
               </Button>
           }
 
