@@ -181,19 +181,6 @@ class NewVersion extends Component {
   }
 
   render() {
-    const styles = {
-      containerStyle: {
-        backgroundColor: '#F8F8F8',
-        flex: 1,
-        maxWidth: Dimensions.get('window').width
-      },
-      ingredientContainer: {
-        flexWrap: 'wrap'
-      },
-      instructionContainer: {
-        width: '100%'
-      }
-    }
     const { containerStyle, ingredientContainer, instructionContainer } = styles
     console.log(this.state.instructionsList);
     return (
@@ -293,4 +280,17 @@ class NewVersion extends Component {
   }
 }
 
+const styles = {
+  containerStyle: {
+    backgroundColor: '#F8F8F8',
+    flex: 1,
+    maxWidth: Dimensions.get('window').width
+  },
+  ingredientContainer: {
+    flexWrap: 'wrap'
+  },
+  instructionContainer: {
+    width: '100%'
+  }
+}
 export default NewVersion
