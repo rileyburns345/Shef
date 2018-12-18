@@ -51,6 +51,9 @@
 		F1936CD307DE4157B57E0007 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69D36B99AD4D4B3BA2CE4F03 /* rubicon-icon-font.ttf */; };
 		A59321CC7D5B4B6B8956CA50 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B06CC9710919421CB9F23792 /* SimpleLineIcons.ttf */; };
 		8B46F41C2768484681A60769 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 361B13BA76774FEDA74B392C /* Zocial.ttf */; };
+		C203FDDDD97440669BF82B29 /* Cinzel-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C147477C406482D8A19F107 /* Cinzel-Black.ttf */; };
+		3B86F5688C634BBCA5515296 /* Cinzel-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 56F59A379AC9489F920F0C31 /* Cinzel-Bold.ttf */; };
+		829C3446E21145B099CAEBBE /* Cinzel-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15EF03409F5148CC84295430 /* Cinzel-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -370,6 +373,9 @@
 		69D36B99AD4D4B3BA2CE4F03 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B06CC9710919421CB9F23792 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		361B13BA76774FEDA74B392C /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7C147477C406482D8A19F107 /* Cinzel-Black.ttf */ = {isa = PBXFileReference; name = "Cinzel-Black.ttf"; path = "../assets/fonts/Cinzel-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		56F59A379AC9489F920F0C31 /* Cinzel-Bold.ttf */ = {isa = PBXFileReference; name = "Cinzel-Bold.ttf"; path = "../assets/fonts/Cinzel-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		15EF03409F5148CC84295430 /* Cinzel-Regular.ttf */ = {isa = PBXFileReference; name = "Cinzel-Regular.ttf"; path = "../assets/fonts/Cinzel-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -648,6 +654,9 @@
 				69D36B99AD4D4B3BA2CE4F03 /* rubicon-icon-font.ttf */,
 				B06CC9710919421CB9F23792 /* SimpleLineIcons.ttf */,
 				361B13BA76774FEDA74B392C /* Zocial.ttf */,
+				7C147477C406482D8A19F107 /* Cinzel-Black.ttf */,
+				56F59A379AC9489F920F0C31 /* Cinzel-Bold.ttf */,
+				15EF03409F5148CC84295430 /* Cinzel-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1113,6 +1122,9 @@
 				F1936CD307DE4157B57E0007 /* rubicon-icon-font.ttf in Resources */,
 				A59321CC7D5B4B6B8956CA50 /* SimpleLineIcons.ttf in Resources */,
 				8B46F41C2768484681A60769 /* Zocial.ttf in Resources */,
+				C203FDDDD97440669BF82B29 /* Cinzel-Black.ttf in Resources */,
+				3B86F5688C634BBCA5515296 /* Cinzel-Bold.ttf in Resources */,
+				829C3446E21145B099CAEBBE /* Cinzel-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
