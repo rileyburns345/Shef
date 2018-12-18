@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import { Header, Left, Body, Right, Button, Icon, Title } from 'native-base'
 
+import { Fonts } from '../../utils/Fonts' 
+
 // create a component
 class NavBar extends Component {
   render(){
@@ -18,10 +20,11 @@ class NavBar extends Component {
         shadowOffset: { width: 0, height: 2,  },
         shadowOpacity: 0.2,
         elevation: 2,
-        position: 'relative'
+        position: 'relative',
       },
       textStyle: {
-        fontSize: 20
+        fontSize: 20,
+        fontFamily: Fonts.Cinzel
       }
     }
     const {textStyle, viewStyle} = styles
