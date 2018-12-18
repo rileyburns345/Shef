@@ -48,10 +48,14 @@ class NavBar extends Component {
           <Title style={textStyle}> shef </Title>
         </Body>
         <Right>
-          {this.props.token
+          {this.props.token && !this.props.singleView && !this.props.deck
             ? <Button transparent>
-                <Icon style={iconStyle} onPress={()=>this.props.favoritesFilter()} name='star' />
+                <Icon style={iconStyle} onPress={()=>this.props.favoritesFilter()} name='ios-heart' />
               </Button>
+            : null
+          }
+          {this.props.token
+            ? null
             : <Button onPress={()=>this.props.loginSignup()} transparent>
                 <Icon style={iconStyle} name='ios-people' />
               </Button>

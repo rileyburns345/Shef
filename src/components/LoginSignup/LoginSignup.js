@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Header, Content, Form, Button, CheckBox, Text, Item, Input, Label, Left, Right, Footer, Body } from 'native-base';
+import { View, Container, Header, Content, Form, Button, CheckBox, Text, Item, Input, Label, Left, Right, Footer, Body } from 'native-base';
 
 class LoginSignup extends Component {
   constructor(props){
@@ -61,7 +61,7 @@ checkCheckBox = () => {
     let signUpInfo = { email, password, username }
 
     return (
-      <Content>
+      <View>
         <Form>
           <Item floatingLabel>
             <Label style={fieldStyle}>Email</Label>
@@ -91,10 +91,11 @@ checkCheckBox = () => {
             }
           </Left>
           <Body>
+            <Label style={fieldStyle}>JOIN US</Label>
             <CheckBox onPress={this.checkCheckBox} checked={false}/>
           </Body>
         </Footer>
-      </Content>
+      </View>
     )
   }
 }
