@@ -69,16 +69,16 @@ export default class SideBar extends React.Component {
             <ListItem itemDivider style={backgroundStyle}>
               <Text style={textStyle}>Browse by Diet:</Text>
             </ListItem>
-            {this.state.diets.map((diet)=>(
-              <ListItem onPress={()=>this.handleCategory(diet.toLowerCase())}>
+            {this.state.diets.map((diet, idx)=>(
+              <ListItem key={idx} onPress={()=>this.handleCategory(diet.toLowerCase())}>
                 <Text style={filterTextStyle}>{diet}</Text>
               </ListItem>
             ))}
             <ListItem itemDivider style={backgroundStyle}>
               <Text style={textStyle}>Browse by Course:</Text>
             </ListItem>
-            {this.state.courses.map((course)=>(
-              <ListItem onPress={()=>this.handleCategory(course.toLowerCase())}>
+            {this.state.courses.map((course, idx)=>(
+              <ListItem key={idx} onPress={()=>this.handleCategory(course.toLowerCase())}>
                 <Text style={filterTextStyle}>{course}</Text>
               </ListItem>
             ))}
