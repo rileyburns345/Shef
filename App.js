@@ -22,14 +22,14 @@ export default class App extends Component {
       singleView: false,
       searchVal: 'Popular Recipes',
       newView: false,
-      token: false,
+      token: '',
       loginSignup: false,
       newVersion: false,
       versionFilter: [],
       deck: false,
       favorites: [],
       favoritesView: false,
-      actualToken: false
+      actualToken: ''
     }
   }
 
@@ -52,6 +52,7 @@ export default class App extends Component {
           loginSignup: false,
           actualToken: auth
         })
+        this.storeToken(json.id, auth)
       }
     }
 
@@ -67,21 +68,25 @@ export default class App extends Component {
         })
         // console.log('json: ', response);
         if(response.status === 200) {
-        const json = await response.json()
-        this.setState({
-          ...this.state,
-          token: json.id,
-          loginSignup: false
-        })
-        console.log('TOKEN', this.state.token);
+          const auth = response.headers.map.auth.slice(8, response.headers.map.auth.length)
+          const json = await response.json()
+          this.setState({
+            ...this.state,
+            token: json.id,
+            loginSignup: false,
+            actualToken: auth
+          })
+          this.storeToken(json.id, auth)
+          console.log('TOKEN', this.state.token);
         }
       }
 
       logoutClick = async () => {
           this.setState({
             ...this.state,
-            token: false
+            token: ''
           })
+          this.storeToken("", "")
           }
 
   async componentDidMount() {
@@ -95,6 +100,7 @@ export default class App extends Component {
       versionFilter: filtered
     })
     this.getFavorites()
+    this.getToken()
   }
 
   versionControlFilter(data){
@@ -304,6 +310,11 @@ export default class App extends Component {
           ...this.state,
           favorites: JSON.parse(value)
         })
+      }else{
+        this.setState({
+          ...this.state,
+          favorites: []
+        }, this.storeFavorites())
       }
      } catch (error) {
        this.storeFavorites()
@@ -319,9 +330,28 @@ export default class App extends Component {
     }
   }
 
+  async getToken() {
+    console.log('looking for TOKEN');
+    const token = await AsyncStorage.getItem('token')
+    const user_id = await AsyncStorage.getItem('user_id')
+    console.log(token, user_id);
+    const parsed = JSON.parse(user_id)
+    this.setState({
+      ...this.state,
+      token: parsed || "",
+      actualToken: token | ""
+    })
+  }
+
+  async storeToken(user_id=this.state.token, token=this.state.actualToken){
+    console.log(user_id, token);
+    await AsyncStorage.setItem('token', token);
+    await AsyncStorage.setItem('user_id', JSON.stringify(user_id));
+  }
+
   addDeleteFavorite(id){
     if(this.state.favorites.includes(id)){
-      const newState = this.state.favorites.filter((favorite)=>favorite.id !== id)
+      const newState = this.state.favorites.filter((favorite)=>favorite !== id)
       this.setState({
         ...this.state,
         favorites: newState
@@ -374,14 +404,17 @@ export default class App extends Component {
     console.log('BEFORE DELETE', this.state);
     letRecipeToDelete = this.state.recipes.filter(recipe => (recipe.id === recipeID))[0]
     console.log('letRecipeToDelete',  letRecipeToDelete);
-    const response = await fetch(`${API}/recipes/${letRecipeToDelete.id}`, {
+    const response = await fetch(`${API}/recipes/${recipeID}`, {
        method: 'DELETE',
+       mode: "cors", // no-cors, cors, *same-origin
+       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+       credentials: "same-origin", // include, *same-origin, omit
        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          "token": this.state.actualToken
-        }
+         'Accept': 'application/JSON',
+         'Content-Type': 'application/json',
+         'token': this.state.actualToken
+       },
       })
-      console.log('json: ', response);
       if(response.status === 200) {
       const json = await response.json()
       this.getAllAPI()
@@ -412,7 +445,7 @@ export default class App extends Component {
             {this.state.newView ? <NewRecipe dismiss={this.dismissNewView.bind(this)} newRecipe={this.newRecipe.bind(this)} /> : null}
             {this.state.loginSignup ? <LoginSignup loginClick={this.loginClick} signUpClick={this.signUpClick}/> : null}
             {this.state.singleView ? <SingleCardView
-              deleteRecipeClick={this.deleteRecipeClick} newVersion={this.newVersion.bind(this)} token={this.state.token} favorites={this.state.favorites} addRemoveFavorite={this.addDeleteFavorite.bind(this)} backClick={this.backClick} card={this.state.singleView}/> : null}
+              deleteRecipeClick={this.deleteRecipeClick.bind(this)} newVersion={this.newVersion.bind(this)} token={this.state.token} favorites={this.state.favorites} addRemoveFavorite={this.addDeleteFavorite.bind(this)} backClick={this.backClick} card={this.state.singleView}/> : null}
             {this.state.singleView || this.state.newView || this.state.loginSignup || this.state.newVersion || this.state.deck ? null : <RecipeList token={this.state.token} newVersion={this.newVersion.bind(this)} searchVal={this.state.searchVal} recipes={this.state.filteredRecipes} cardClick={this.cardClick}/>}
           </ScrollView>
           {this.state.token && !this.state.newView && !this.state.deck && !this.state.singleView
