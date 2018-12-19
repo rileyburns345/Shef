@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Form, Body, CardItem, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right, Card, List, ListItem, SwipeRow, View, H2 } from 'native-base';
+import { Container, Header, Content, Form, Body, CardItem, Item, Input, Label, Textarea, Badge, Text, Button, Picker, Icon, Footer, Left, Right, Card, List, ListItem, SwipeRow, View, H2, Toast } from 'native-base';
 import { Dimensions } from 'react-native'
 
 class NewRecipe extends Component {
@@ -92,6 +92,13 @@ class NewRecipe extends Component {
   submit(){
     const { recipe_name, description, ingredients, course, diet, image_url, instructionsList } = this.state
     const newRecipe = { recipe_name, description, ingredients: JSON.stringify(ingredients), course, diet: JSON.stringify(diet), image_url, instructions: JSON.stringify(instructionsList) }
+    if(newRecipe.recipe_name === '' || newRecipe.description === '' || newRecipe.ingredients === "[]" || newRecipe.course === '' || newRecipe.diet === "[]" || newRecipe.image_url === '' || newRecipe.instructions === "[]"){
+      Toast.show({
+        text: 'All forms are required',
+        buttonText: 'Okay'
+      })
+      return
+    }
     this.props.newRecipe(newRecipe)
     this.dismiss()
   }
