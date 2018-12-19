@@ -13,11 +13,16 @@ export default class CardSwiper extends Component {
         backgroundColor: 'maroon',
         justifyContent: 'center'
       },
+      buttonStyle: {
+        backgroundColor: 'maroon',
+        justifyContent: 'center',
+        marginTop: -130
+      },
       versionStyle: {
         color: 'maroon'
       }
     }
-    const { textStyle, backgroundStyle, versionStyle } = styles
+    const { textStyle, backgroundStyle, buttonStyle, versionStyle } = styles
 
     const { deck } = this.props
     return (
@@ -53,12 +58,12 @@ export default class CardSwiper extends Component {
             }
           />
         </View>
-        <View style={{ flexDirection: "row", flex: 1, position: "absolute", bottom: -650, left: 0, right: 0, justifyContent: 'space-between', padding: 15 }}>
-          <Button style={backgroundStyle} rounded iconLeft onPress={() => this._deckSwiper._root.swipeLeft()}>
+        <View style={{ flexDirection: "row", flex: 1, position: "absolute", bottom: -600, left: 0, right: 0, justifyContent: 'space-between', padding: 15 }}>
+          <Button style={buttonStyle} rounded iconLeft onPress={() => this._deckSwiper._root.swipeLeft()}>
             <Icon name="arrow-back" />
             <Text>Swipe Left</Text>
           </Button>
-          <Button style={backgroundStyle} rounded iconRight onPress={() => this._deckSwiper._root.swipeRight()}>
+          <Button style={buttonStyle} rounded iconRight onPress={() => this._deckSwiper._root.swipeRight()}>
             <Text>Swipe Right</Text>
             <Icon name="arrow-forward" />
           </Button>

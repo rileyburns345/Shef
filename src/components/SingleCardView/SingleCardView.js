@@ -56,7 +56,6 @@ class SingleCardView extends Component {
             <Card style={{flex: 0}}>
               <CardItem>
                   <Text style={titleStyle}>{card.recipe_name}</Text>
-
                 <Right>
                   <Left>
                     {this.props.favorites.includes(card.id)

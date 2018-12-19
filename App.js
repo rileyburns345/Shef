@@ -297,37 +297,32 @@ export default class App extends Component {
      searchVal: 'Popular Recipes',
      filteredRecipes: this.state.versionFilter,
      favoritesView: false,
-     loginSignup: false
+     loginSignup: false,
+     newVersion: false,
+     newView: false
    })
   }
 
   async getFavorites() {
-    try {
-      const value = await AsyncStorage.getItem('favorites');
-      if (value !== null) {
-        // We have data!!
-        this.setState({
-          ...this.state,
-          favorites: JSON.parse(value)
-        })
-      }else{
-        this.setState({
-          ...this.state,
-          favorites: []
-        }, this.storeFavorites())
-      }
-     } catch (error) {
-       this.storeFavorites()
-     }
+    const value = await AsyncStorage.getItem('favorites');
+    if (value !== null) {
+      // We have data!!
+      const parsed = JSON.parse(value)
+      this.setState({
+        ...this.state,
+        favorites: parsed
+      })
+    }else{
+      this.setState({
+        ...this.state,
+        favorites: []
+      })
+      this.storeFavorites([])
+    }
   }
 
-  async storeFavorites(){
-    try {
-      await AsyncStorage.setItem('favorites', JSON.stringify(this.state.favorites));
-    } catch (error) {
-      // Error saving data
-      console.log('error at store');
-    }
+  async storeFavorites(favorites=this.state.favorites){
+    await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
   }
 
   async getToken() {
@@ -373,10 +368,11 @@ export default class App extends Component {
       const value = recipes.filter((recipe)=>recipe.id === favorite)[0]
       results.push(value)
     })
+    const newState = results.filter((result)=>result !== undefined)
     this.setState({
       ...this.state,
       favoritesView: true,
-      filteredRecipes: results,
+      filteredRecipes: newState,
       searchVal: 'My Favorites'
     })
     setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
@@ -423,7 +419,6 @@ export default class App extends Component {
         singleView: false
       })
       }
-
       if(this.state.favorites.includes(recipeID)){
         const newFavorites = this.state.favorites.filter((favorite)=>favorite !== recipeID)
         this.setState({
@@ -431,7 +426,6 @@ export default class App extends Component {
           favorites: newFavorites
         })
       }
-
     }
 
     forceAnUpdate(){
@@ -454,7 +448,7 @@ export default class App extends Component {
     return (
       <Root>
         <Container >
-          <NavBar loginSignupCheck={this.state.loginSignup} favoritesFilter={this.favoritesFilter.bind(this)} favoritesView={this.state.favoritesView} singleView={this.state.singleView} back={this.deckNullify.bind(this)} deck={this.state.deck} loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
+          <NavBar newView={this.state.newView} loginSignupCheck={this.state.loginSignup} favoritesFilter={this.favoritesFilter.bind(this)} favoritesView={this.state.favoritesView} singleView={this.state.singleView} back={this.deckNullify.bind(this)} deck={this.state.deck} loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
           <Drawer ref={(ref) => { this.drawer = ref; }}
           content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer} logoutClick={this.logoutClick}/>}
           onClose={() => this.closeDrawer()}>
