@@ -16,7 +16,7 @@ export default class CardSwiper extends Component {
       buttonStyle: {
         backgroundColor: 'maroon',
         justifyContent: 'center',
-        marginTop: 0
+        marginTop: -130
       },
       versionStyle: {
         color: 'maroon'
