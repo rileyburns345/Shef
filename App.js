@@ -307,9 +307,10 @@ export default class App extends Component {
     const value = await AsyncStorage.getItem('favorites');
     if (value !== null) {
       // We have data!!
+      const parsed = JSON.parse(value)
       this.setState({
         ...this.state,
-        favorites: JSON.parse(value)
+        favorites: parsed
       })
     }else{
       this.setState({
@@ -367,10 +368,11 @@ export default class App extends Component {
       const value = recipes.filter((recipe)=>recipe.id === favorite)[0]
       results.push(value)
     })
+    const newState = results.filter((result)=>result !== undefined)
     this.setState({
       ...this.state,
       favoritesView: true,
-      filteredRecipes: results,
+      filteredRecipes: newState,
       searchVal: 'My Favorites'
     })
     setTimeout(()=>this.scrollView.scrollTo({x: 0, y: 0, animated: true}), 1)
