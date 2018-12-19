@@ -297,7 +297,9 @@ export default class App extends Component {
      searchVal: 'Popular Recipes',
      filteredRecipes: this.state.versionFilter,
      favoritesView: false,
-     loginSignup: false
+     loginSignup: false,
+     newVersion: false,
+     newView: false
    })
   }
 
@@ -423,12 +425,13 @@ export default class App extends Component {
         singleView: false
       })
       }
-      let newFavorites = this.state.favorites
-      if(this.state.favorites.includes(recipeID)){ newFavorites = this.state.favorites.filter((favorite)=>favorite !== recipeID}
-      this.setState({
-        ...this.state,
-        favorites: newFavorites
-      })
+      if(this.state.favorites.includes(recipeID)){
+        const newFavorites = this.state.favorites.filter((favorite)=>favorite !== recipeID)
+        this.setState({
+          ...this.state,
+          favorites: newFavorites
+        })
+      }
     }
 
     forceAnUpdate(){
@@ -451,7 +454,7 @@ export default class App extends Component {
     return (
       <Root>
         <Container >
-          <NavBar loginSignupCheck={this.state.loginSignup} favoritesFilter={this.favoritesFilter.bind(this)} favoritesView={this.state.favoritesView} singleView={this.state.singleView} back={this.deckNullify.bind(this)} deck={this.state.deck} loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
+          <NavBar newView={this.state.newView} loginSignupCheck={this.state.loginSignup} favoritesFilter={this.favoritesFilter.bind(this)} favoritesView={this.state.favoritesView} singleView={this.state.singleView} back={this.deckNullify.bind(this)} deck={this.state.deck} loginSignup={this.loginSignup.bind(this)} token={this.state.token} openDrawer={this.openDrawer}/>
           <Drawer ref={(ref) => { this.drawer = ref; }}
           content={<SideBar token={this.state.token} filtering={this.filtering.bind(this)} navigator={this.navigator} closeSideBar={this.closeDrawer} logoutClick={this.logoutClick}/>}
           onClose={() => this.closeDrawer()}>

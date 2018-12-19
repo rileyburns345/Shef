@@ -14,7 +14,7 @@ class NavBar extends Component {
         backgroundColor: 'maroon',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        height: 115,
+        height: 80,
         paddingBottom: 0,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
@@ -35,7 +35,7 @@ class NavBar extends Component {
     return (
       <Header style={viewStyle}>
         <Left>
-          {this.props.deck || this.props.singleView || this.props.favoritesView || this.props.loginSignupCheck
+          {this.props.deck || this.props.singleView || this.props.favoritesView || this.props.loginSignupCheck || this.props.newView
             ? <Button onPress={()=>this.props.back()} transparent>
                 <Icon style={iconStyle} name='arrow-back' />
               </Button>
@@ -48,7 +48,7 @@ class NavBar extends Component {
           <Title style={textStyle}> shef </Title>
         </Body>
         <Right>
-          {this.props.token && !this.props.singleView && !this.props.deck
+          {this.props.token && !this.props.singleView && !this.props.deck && !this.props.newView
             ? <Button transparent>
                 <Icon style={iconStyle} onPress={()=>this.props.favoritesFilter()} name='ios-heart' />
               </Button>

@@ -53,7 +53,7 @@ export default class CardSwiper extends Component {
             }
           />
         </View>
-        <View style={{ flexDirection: "row", flex: 1, position: "absolute", bottom: -650, left: 0, right: 0, justifyContent: 'space-between', padding: 15 }}>
+        <View style={{ flexDirection: "row", flex: 1, position: "absolute", bottom: -600, left: 0, right: 0, justifyContent: 'space-between', padding: 15 }}>
           <Button style={backgroundStyle} rounded iconLeft onPress={() => this._deckSwiper._root.swipeLeft()}>
             <Icon name="arrow-back" />
             <Text>Swipe Left</Text>
