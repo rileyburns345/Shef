@@ -304,32 +304,24 @@ export default class App extends Component {
   }
 
   async getFavorites() {
-    try {
-      const value = await AsyncStorage.getItem('favorites');
-      if (value !== null) {
-        // We have data!!
-        this.setState({
-          ...this.state,
-          favorites: JSON.parse(value)
-        })
-      }else{
-        this.setState({
-          ...this.state,
-          favorites: []
-        }, this.storeFavorites())
-      }
-     } catch (error) {
-       this.storeFavorites()
-     }
+    const value = await AsyncStorage.getItem('favorites');
+    if (value !== null) {
+      // We have data!!
+      this.setState({
+        ...this.state,
+        favorites: JSON.parse(value)
+      })
+    }else{
+      this.setState({
+        ...this.state,
+        favorites: []
+      })
+      this.storeFavorites([])
+    }
   }
 
-  async storeFavorites(){
-    try {
-      await AsyncStorage.setItem('favorites', JSON.stringify(this.state.favorites));
-    } catch (error) {
-      // Error saving data
-      console.log('error at store');
-    }
+  async storeFavorites(favorites=this.state.favorites){
+    await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
   }
 
   async getToken() {
