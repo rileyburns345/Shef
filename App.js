@@ -52,7 +52,6 @@ export default class App extends Component {
           loginSignup: false,
           actualToken: auth
         })
-        this.storeToken(json.id, auth)
       }
     }
 
@@ -76,7 +75,6 @@ export default class App extends Component {
             loginSignup: false,
             actualToken: auth
           })
-          this.storeToken(json.id, auth)
           console.log('TOKEN', this.state.token);
         }
       }
@@ -86,7 +84,6 @@ export default class App extends Component {
             ...this.state,
             token: ''
           })
-          this.storeToken("", "")
           }
 
   async componentDidMount() {
@@ -100,7 +97,6 @@ export default class App extends Component {
       versionFilter: filtered
     })
     this.getFavorites()
-    this.getToken()
   }
 
   versionControlFilter(data){
@@ -286,6 +282,7 @@ export default class App extends Component {
        },
        body: JSON.stringify(recipe)
      })
+       console.log('response', response);
      setTimeout(()=>this.getAllAPI(), 100)
  }
 
@@ -323,25 +320,6 @@ export default class App extends Component {
 
   async storeFavorites(favorites=this.state.favorites){
     await AsyncStorage.setItem('favorites', JSON.stringify(favorites));
-  }
-
-  async getToken() {
-    console.log('looking for TOKEN');
-    const token = await AsyncStorage.getItem('token')
-    const user_id = await AsyncStorage.getItem('user_id')
-    console.log(token, user_id);
-    const parsed = JSON.parse(user_id)
-    this.setState({
-      ...this.state,
-      token: parsed || "",
-      actualToken: token | ""
-    })
-  }
-
-  async storeToken(user_id=this.state.token, token=this.state.actualToken){
-    console.log(user_id, token);
-    await AsyncStorage.setItem('token', token);
-    await AsyncStorage.setItem('user_id', JSON.stringify(user_id));
   }
 
   addDeleteFavorite(id){
