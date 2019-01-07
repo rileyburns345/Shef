@@ -17,25 +17,25 @@ Provides an alternative to traditional hormonal birth-control and IUDs through u
 
 ## Demo 11/02/2018
 
-[![Alt text](https://vimeo.com/309322890)
+Link: (https://vimeo.com/309322890)
 
 ## Installing
 
 ```
-git clone https://github.com/torizoemitchell/shark-week-FE.git
-cd shark-week-FE
+git clone https://github.com/torizoemitchell/Shef
+cd Shef
 npm install
 ```
 
 ## Built With
 
 * Javascript, HTML, CSS
-* Materialize
-* Axios to the API: https://github.com/nicholasgriffen/tempo-server
+* React-Native
+* Materialize, Native Base
+* Backend: https://github.com/e-scheetz/Shef-backend
 
 ## Authors
 
-* [Tori Mitchell](https://github.com/torizoemitchell)
-* [Nicholas Griffen](https://github.com/nicholasgriffen)
-* [Shawn Milne](https://github.com/sawaymilno)
+* [Russell Storms](https://github.com/rstorms90)
+* [Erik Scheetz](https://github.com/e-scheetz)
 * [Riley Burns](https://github.com/rileyburns345)
