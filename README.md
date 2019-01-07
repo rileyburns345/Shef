@@ -11,13 +11,9 @@
 * When the users view a recipe they can scroll through the versions and upon clicking on a particulatr version view the ingredients, cooking instructions and dietary resctrictions
 
 
-# Tempo
-
-Provides an alternative to traditional hormonal birth-control and IUDs through utilizing daily temperature recordings in correlation with menstration tracking. Tempo helps women track their ovulation history and well as predict their future cycles
-
 ## Demo 11/02/2018
 
-Link: (https://vimeo.com/309322890)
+Link: https://vimeo.com/309322890
 
 ## Installing
 
