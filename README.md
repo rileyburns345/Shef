@@ -11,7 +11,7 @@
 * When the users view a recipe they can scroll through the versions and upon clicking on a particulatr version view the ingredients, cooking instructions and dietary resctrictions
 
 
-## Demo 11/02/2018
+## Demo 12/19/2018
 
 Link: https://vimeo.com/309322890
 
