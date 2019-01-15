@@ -11,22 +11,23 @@
 * When the users view a recipe they can scroll through the versions and upon clicking on a particulatr version view the ingredients, cooking instructions and dietary resctrictions
 
 
-## Demo 12/19/2018
+# Demo 12/19/2018
 
 Link: https://vimeo.com/309322890
 
-#### single recipe view
+## single recipe view
 ![example](./screenshots/single-recipe-view.png)
 
-#### browse by category or keyword
+## browse by category or keyword
 ![example](./screenshots/search-by-keyword.png)
 
-#### adding new recipes
+## adding new recipes
 ![example](./screenshots/new-recipe-form.png)
 ![example](./screenshots/new-recipe-form-pt2.png)
 
-#### new recipe view
+## new recipe view
 ![example](./screenshots/new-recipe-view.png)
+
 
 ## Installing
 
