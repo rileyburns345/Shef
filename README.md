@@ -20,7 +20,7 @@ Link: https://vimeo.com/309322890
 ## Installing
 
 ```
-git clone https://github.com/torizoemitchell/Shef
+git clone https://github.com/e-scheetz/Shef
 cd Shef
 npm install
 ```
