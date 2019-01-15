@@ -15,7 +15,18 @@
 
 Link: https://vimeo.com/309322890
 
+#### single recipe view
 ![example](./screenshots/single-recipe-view.png)
+
+#### browse by category or keyword
+![example](./screenshots/search-by-keyword.png)
+
+#### adding new recipes
+![example](./screenshots/new-recipe-form.png)
+![example](./screenshots/new-recipe-form-pt2.png)
+
+#### new recipe view
+![example](./screenshots/new-recipe-view.png)
 
 ## Installing
 
