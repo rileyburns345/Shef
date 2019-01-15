@@ -15,8 +15,6 @@
 
 Link: https://vimeo.com/309322890
 
-![example](./screenshots/single-recipe-view.png)
-
 ## Installing
 
 ```
